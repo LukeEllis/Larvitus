@@ -1,0 +1,25 @@
+{
+  "name": "larvitus",
+  "version": "1.0.0",
+  "description": "Bot to handle events for Bluechromed",
+  "main": "app.js",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "sequelize": "^6.5.1",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukeEllis/Larvitus.git"
+  },
+  "author": "Luke Ellis <lukeellisx@gmail.com> (example.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LukeEllis/Larvitus/issues"
+  },
+  "homepage": "https://github.com/LukeEllis/Larvitus#readme"
+}
