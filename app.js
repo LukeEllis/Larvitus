@@ -64,7 +64,8 @@ client.on('message', async message => {
             .setDescription(`<@${target.id}>`)
             .setThumbnail(`https://cdn.discordapp.com/avatars/${target.id}/${target.avatar}.png`)
             .addFields(
-                { name: 'Pokédollars', value: `${currency.getBalance(target.id)}`, inline: true }
+                { name: 'Pokédollars', value: `${currency.getBalance(target.id)}`, inline: true },
+				{ name: 'Cake', value: `50`, inline: true } 
             )
             .setTimestamp()
             .setFooter('Brought to you by Larvitus', 'https://cdn.discordapp.com/attachments/624680294905282581/821551597213581322/Ash_Larvitar.webp');
