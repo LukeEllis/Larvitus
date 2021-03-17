@@ -59,13 +59,16 @@ client.on('message', async message => {
 		const items = await user.getItems();
 
         const inventoryEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle(`Inventory`)
+            .setColor('#00007F')
+            .setTitle(`Your Trainers Bag`)
             .setDescription(`<@${target.id}>`)
             .setThumbnail(`https://cdn.discordapp.com/avatars/${target.id}/${target.avatar}.png`)
             .addFields(
                 { name: 'Pokédollars', value: `${currency.getBalance(target.id)}`, inline: true },
-				{ name: 'Cakes', value: `50`, inline: true } 
+				{ name: 'Cakes', value: `${UserItems.getItems(target.id)}`, inline: true },
+				{ name: 'coffee', value: `17`, inline: true },
+				{ name: 'tea', value: `3`, inline: true }  
+		  
             )
             .setTimestamp()
             .setFooter('Brought to you by Larvitus', 'https://cdn.discordapp.com/attachments/624680294905282581/821551597213581322/Ash_Larvitar.webp');
