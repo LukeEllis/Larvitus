@@ -5,8 +5,8 @@
   "main": "app.js",
   "dependencies": {
     "discord.js": "^12.5.1",
-    "sequelize": "^6.5.1",
-    "sqlite3": "^5.0.2"
+    "pg": "^8.6.0",
+    "sequelize": "^6.5.1"
   },
   "devDependencies": {},
   "scripts": {

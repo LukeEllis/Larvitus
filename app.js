@@ -1,116 +1,51 @@
+const fs = require('fs');
 const Discord = require('discord.js');
+// const db = require('./services/postgres.service');
+const { prefix, token } = require('./config.json');
+const CurrencyController = require('./controllers/currency')
 
 const client = new Discord.Client();
-const { Users, CurrencyShop } = require('./dbObjects');
-const { Op } = require('sequelize');
-const currency = new Discord.Collection();
-const PREFIX = '!';
+client.commands = new Discord.Collection();
+const commandFolders = fs.readdirSync('./commands');
 
-/*
- * Make sure you are on at least version 5 of Sequelize! Version 4 as used in this guide will pose a security threat.
- * You can read more about this issue On the [Sequelize issue tracker](https://github.com/sequelize/sequelize/issues/7310).
- */
+for (const folder of commandFolders) {
+	const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+	for (const file of commandFiles) {
+		const command = require(`./commands/${folder}/${file}`);
+		client.commands.set(command.name, command);
+	}
+}
 
-Reflect.defineProperty(currency, 'add', {
-	/* eslint-disable-next-line func-name-matching */
-	value: async function add(id, amount) {
-		const user = currency.get(id);
-		if (user) {
-			user.balance += Number(amount);
-			return user.save();
-		}
-		const newUser = await Users.create({ user_id: id, balance: amount });
-		currency.set(id, newUser);
-		return newUser;
-	},
+client.once('ready', () => {
+	console.log('Ready!');
 });
 
-Reflect.defineProperty(currency, 'getBalance', {
-	/* eslint-disable-next-line func-name-matching */
-	value: function getBalance(id) {
-		const user = currency.get(id);
-		return user ? user.balance : 0;
-	},
-});
+client.on('message', async (message) => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-client.once('ready', async () => {
-	const storedBalances = await Users.findAll();
-	storedBalances.forEach(b => currency.set(b.user_id, b));
-	console.log(`Logged in as ${client.user.tag}!`);
-});
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
+	const commandName = args.shift().toLowerCase();
 
-client.on('message', async message => {
-	if (message.author.bot) return;
-	currency.add(message.author.id, 1);
+	if (!client.commands.has(commandName)) return;
 
-	if (!message.content.startsWith(PREFIX)) return;
-	const input = message.content.slice(PREFIX.length).trim();
-	if (!input.length) return;
-	const [, command, commandArgs] = input.match(/(\w+)\s*([\s\S]*)/);
+	const command = client.commands.get(commandName);
 
-	if (command === 'balance') {
-		const target = message.mentions.users.first() || message.author;
-		return message.channel.send(`${target.tag} has ${currency.getBalance(target.id)} Pokédollars`);
-	} else if (command === 'inventory') {
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments, ${message.author}!`;
 
-        // !inventory
-		const target = message.mentions.users.first() || message.author;
-		const user = await Users.findOne({ where: { user_id: target.id } });
-		const items = await user.getItems();
-
-        const inventoryEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
-            .setTitle(`Inventory`)
-            .setDescription(`<@${target.id}>`)
-            .setThumbnail(`https://cdn.discordapp.com/avatars/${target.id}/${target.avatar}.png`)
-            .addFields(
-                { name: 'Pokédollars', value: `${currency.getBalance(target.id)}`, inline: true },
-				{ name: 'Cakes', value: `50`, inline: true } 
-            )
-            .setTimestamp()
-            .setFooter('Brought to you by Larvitus', 'https://cdn.discordapp.com/attachments/624680294905282581/821551597213581322/Ash_Larvitar.webp');
-
-		if (!items.length) return message.channel.send(`${target.tag} has nothing!`);
-        return message.channel.send({ embed: inventoryEmbed });
-        
-	} else if (command === 'transfer') {
-		const currentAmount = currency.getBalance(message.author.id);
-		const transferAmount = commandArgs.split(/ +/).find(arg => !/<@!?\d+>/.test(arg));
-		const transferTarget = message.mentions.users.first();
-
-		if (!transferAmount || isNaN(transferAmount)) return message.channel.send(`Sorry ${message.author}, that's an invalid amount`);
-		if (transferAmount > currentAmount) return message.channel.send(`Sorry ${message.author} you don't have that much.`);
-		if (transferAmount <= 0) return message.channel.send(`Please enter an amount greater than zero, ${message.author}`);
-
-		currency.add(message.author.id, -transferAmount);
-		currency.add(transferTarget.id, transferAmount);
-
-		return message.channel.send(`Successfully transferred ${transferAmount}💰 to ${transferTarget.tag}. Your current balance is ${currency.getBalance(message.author.id)}💰`);
-	} else if (command === 'buy') {
-		const item = await CurrencyShop.findOne({ where: { name: { [Op.like]: commandArgs } } });
-		if (!item) return message.channel.send('That item doesn\'t exist.');
-		if (item.cost > currency.getBalance(message.author.id)) {
-			return message.channel.send(`You don't have enough currency, ${message.author}`);
+		if (command.usage) {
+		    reply += `\nProper usage for this command is: \`${prefix}${command.name} ${command.usage}\``;
 		}
 
-		const user = await Users.findOne({ where: { user_id: message.author.id } });
-		currency.add(message.author.id, -item.cost);
-		await user.addItem(item);
+		return message.channel.send(reply);
+	}
 
-		message.channel.send(`You've bought a ${item.name}`);
-	} else if (command === 'shop') {
-		const items = await CurrencyShop.findAll();
-		return message.channel.send(items.map(i => `${i.name}: ${i.cost}💰`).join('\n'), { code: true });
-	} else if (command === 'leaderboard') {
-		return message.channel.send(
-			currency.sort((a, b) => b.balance - a.balance)
-				.filter(user => client.users.cache.has(user.user_id))
-				.first(10)
-				.map((user, position) => `(${position + 1}) ${(client.users.cache.get(user.user_id).tag)}: ${user.balance}💰`)
-				.join('\n'),
-			{ code: true },
-		);
+	try {
+		command.execute(message, args);
+	} catch (error) {
+		console.error(error);
+		message.reply('there was an error trying to execute that command!');
 	}
 });
 
-client.login('ODIxNTQ0MzE4MzUxMTc5Nzc3.YFFQxQ.-qHcAuyfzzO1lszS7FRJQIvokgs');
+client.login(token);
