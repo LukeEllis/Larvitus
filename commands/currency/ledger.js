@@ -1,5 +1,6 @@
 const currency = require("../../controllers/currency");
 const ledger = require("../../controllers/ledger");
+const errors = require("../../controllers/error");
 
 module.exports = {
 	name: 'ledger',
@@ -22,7 +23,7 @@ module.exports = {
 			}
 		}catch (err){
 			console.error(err.message)
-			return message.channel.send(`Beep boop, your request got lost in the void. Let my creator know and they will look into it.`)
+			return errors.errorMessage(message)
 		}
 	},
 };

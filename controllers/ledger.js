@@ -8,10 +8,10 @@ exports.getLedger = async (target) => {
     return getLedgerResponse
 }
 
-exports.updateLedger = async (target, amount, author) => {
+exports.updateLedger = async (target, action, amount, author) => {
     let updateLedgerResponse = db.query(
         'INSERT INTO main.ledger (user_id, user_name, transaction, amount, transaction_owner_id, transaction_owner) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-        [`${target.id}`, `${target.tag}`, 'add', `${amount}`, `${author.id}`, `${author.tag}`]
+        [`${target.id}`, `${target.tag}`, `${action}`, `${amount}`, `${author.id}`, `${author.tag}`]
     )
     return updateLedgerResponse
 }

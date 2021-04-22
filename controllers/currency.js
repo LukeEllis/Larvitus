@@ -31,3 +31,19 @@ exports.addCurrency = async (amount, target) => {
     )
     return addCurrencyResponse
 }
+
+exports.updateCurrency = async (amount, target) => {
+    let updateCurrencyResponse = db.query(
+        'UPDATE main.currency SET currency = $1 WHERE user_id = $2 RETURNING *',
+        [`${amount}`, `${target.id}`]
+    )
+    return updateCurrencyResponse
+}
+
+exports.removeCurrency = async (amount, target) => {
+    let removeCurrencyResponse = db.query(
+        'UPDATE main.currency SET currency = currency - $1 WHERE user_id = $2 RETURNING *',
+        [`${amount}`, `${target.id}`]
+    )
+    return removeCurrencyResponse
+}
