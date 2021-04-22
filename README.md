@@ -8,15 +8,17 @@ TODO
 - [x] update badges with earned_date with a timestamp
 - [x] make sure currency cannot go below 0
 - [x] make sure item amounts cannot go below 0
-- [] update badges to show badge case using Canvas
 - [x] update ledger table to have a timestamp
-- [] update ledger to only return the latest 10 results
-- [] update ledger to return an embed/or scroll image with Canvas
+- [x] update ledger to only return the latest 10 results
 - [] update currency with reason_awarded field
 - [] create items file (sword, gem encrusted sword, strongest potion, armor) or database table
     - [] add item limit for certain items, ie only one encrusted sword, 10 strongest potions, etc.
+
+CANVAS TODO
+- [] update badges to show badge case using Canvas
 - [] update inventory to show backpack using Canvas
 - [] update currency to show wallet using Canvas
+- [] update ledger to return an embed/or scroll image with Canvas
 
 LONG TODO
 - [] integrate with Twitch

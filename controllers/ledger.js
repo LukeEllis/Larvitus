@@ -2,7 +2,7 @@ const db = require("../services/postgres.service");
 
 exports.getLedger = async (target) => {
     let getLedgerResponse = db.query(
-        'SELECT * FROM main.ledger WHERE user_id = $1',
+        'SELECT * FROM main.ledger WHERE user_id = $1 ORDER BY transaction_date DESC LIMIT 10;',
         [`${target.id}`]
     )
     return getLedgerResponse
