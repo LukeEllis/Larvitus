@@ -13,8 +13,8 @@ TODO
 - ~~[] update currency with reason_awarded field~~
 - [x] create items file (sword, gem encrusted sword, strongest potion, armor) or database table
     - [x] add item limit for certain items, ie only one encrusted sword, 10 strongest potions, etc.
-- [] create shop
-- [] create item buy
+- [x] create shop table
+- [] create item buy/shop display
 - [] create dragonslayer games
     - [] slaythedragon
     - [] mine
