@@ -1,5 +1,6 @@
 const currency = require("../../controllers/currency");
 const ledger = require("../../controllers/ledger");
+const errors = require("../../controllers/error");
 
 module.exports = {
 	name: 'ledger',
@@ -16,13 +17,13 @@ module.exports = {
 				message.channel.send(`Looking up ${target.tag}'s ledger.`);
 				let getUserLedger = await ledger.getLedger(target);
 				for (i = getUserLedger.rows.length; i > 0; i--){
-					message.channel.send(`${getUserLedger.rows[i-1].transaction_owner} performed the ${getUserLedger.rows[i-1].transaction} transaction for $${getUserLedger.rows[i-1].amount}`)
+					message.channel.send(`${getUserLedger.rows[i-1].transaction_owner} performed the ${getUserLedger.rows[i-1].transaction} transaction for $${getUserLedger.rows[i-1].amount} at ${getUserLedger.rows[i-1].transaction_date}`)
 				}
 				message.channel.send(`End of ledger history for ${target.tag}`)
 			}
 		}catch (err){
 			console.error(err.message)
-			return message.channel.send(`Beep boop, your request got lost in the void. Let my creator know and they will look into it.`)
+			return errors.errorMessage(message)
 		}
 	},
 };
