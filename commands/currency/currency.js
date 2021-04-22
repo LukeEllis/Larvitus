@@ -19,7 +19,7 @@ module.exports = {
 			if(!moderators.includes(author.id)){
 				message.channel.send(`Beep boop. User does not have admin permissions to perform this command.`)
 			}else if(doesUserExist.rows.length < 1){
-				message.channel.send(`User not found! User must initialize themselves with the !init command.`)
+				return message.channel.send(`User not found! User must initialize themselves with the !init command.`)
 			}
 		}catch (err){
 			console.error(err.message)
