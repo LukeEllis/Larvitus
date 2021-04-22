@@ -19,7 +19,7 @@ module.exports = {
 			if(!moderators.includes(author.id)){
 				message.channel.send(`Beep boop. User does not have admin permissions to perform this command.`)
 			}else if(doesUserExist.rows.length < 1){
-				message.channel.send(`User not found! User must initialize themselves with the !wallet command.`)
+				message.channel.send(`User not found! User must initialize themselves with the !init command.`)
 			}
 		}catch (err){
 			console.error(err.message)
@@ -28,7 +28,9 @@ module.exports = {
 
 		if (action === 'add'){
 			try{
-				message.channel.send(`Adding ${amount} Pokédollars to ${target.tag}'s wallet.`);
+				if (amount < 0){
+					return message.channel.send(`Adding negative numbers is weird. Stop that.`);
+				}
 				let addToUserWallet = await currency.addCurrency(amount, target);
 				message.channel.send(`${author.tag} has successfully added ${amount} Pokédollars to ${target.tag}'s wallet.`);
 
@@ -41,6 +43,9 @@ module.exports = {
 			}
 		}else if (action === 'update'){
 			try{
+				if (amount < 0){
+					return message.channel.send(`Updating to a negative number is weird. Stop that.`);
+				}
 				let getUserCurrencyAmount = await currency.getCurrencyById(target);
 				let currentUserCurrency = getUserCurrencyAmount.rows[0].currency;
 				message.channel.send(`Updating ${target.tag}'s wallet from ${currentUserCurrency} to ${amount} Pokédollars`);
@@ -56,7 +61,10 @@ module.exports = {
 			}			
 		}else if (action === 'remove'){
 			try{
-				message.channel.send(`Removing ${amount} Pokédollars from ${target.tag}'s wallet.`);
+                let currencyAmountCheck = await currency.checkUserWalletExistence(target);
+                if (currencyAmountCheck.rows[0].currency - amount < 0){
+                    return message.channel.send(`The currency to be removed cannot reduce the total to below zero.`);
+                }
 				let removeFromUserWallet = await currency.removeCurrency(amount, target);
 				message.channel.send(`${author.tag} has successfully removed ${amount} Pokédollars from ${target.tag}'s wallet.`);
 

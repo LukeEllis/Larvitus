@@ -18,8 +18,8 @@ exports.getBadgesById = async (target) => {
 
 exports.addBadges = async (target, badgeCategory, badgeName) => {
     let addBadgesResponse = db.query(
-        'INSERT INTO main.badges (user_id, user_name, badge_category, badge_name) VALUES ($1, $2, $3, $4) RETURNING *',
-        [`${target.id}`, `${target.tag}`, `${badgeCategory}`, `${badgeName}`]
+        'INSERT INTO main.badges (user_id, user_name, badge_category, badge_name, earned_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [`${target.id}`, `${target.tag}`, `${badgeCategory}`, `${badgeName}`, new Date()]
     )
     return addBadgesResponse
 }

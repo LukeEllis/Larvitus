@@ -4,9 +4,9 @@ const errors = require("../../controllers/error");
 
 module.exports = {
 	name: 'badges',
-	description: 'Shows [!badges show] or updates badges for a given user.',
+	description: 'Shows badges for a given user.',
     args: true,
-    usage: '<action> <badge category> <badge name> <user>',
+    usage: '!badges show <user>|| Mod functions: <action> <badge category> <badge name> <user>',
 	async execute(message, args) {
         const target = message.mentions.users.first() || message.author;
 		const author = message.author;
@@ -27,7 +27,7 @@ module.exports = {
 					let formatName = await badges.formatBadgeNames(getBadges);
 					badgesEmbed.addFields(
 							{
-								name : `${formatCategory} Badge:`, value: `${formatName}`, inline: false
+								name : `${formatCategory} Badge:`, value: `${formatName}\nEarned on ${getBadges.rows[i-1].earned_date}`, inline: false
 							}
 					)
 				}

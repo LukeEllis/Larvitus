@@ -17,7 +17,7 @@ module.exports = {
 				message.channel.send(`Looking up ${target.tag}'s ledger.`);
 				let getUserLedger = await ledger.getLedger(target);
 				for (i = getUserLedger.rows.length; i > 0; i--){
-					message.channel.send(`${getUserLedger.rows[i-1].transaction_owner} performed the ${getUserLedger.rows[i-1].transaction} transaction for $${getUserLedger.rows[i-1].amount}`)
+					message.channel.send(`${getUserLedger.rows[i-1].transaction_owner} performed the ${getUserLedger.rows[i-1].transaction} transaction for $${getUserLedger.rows[i-1].amount} at ${getUserLedger.rows[i-1].transaction_date}`)
 				}
 				message.channel.send(`End of ledger history for ${target.tag}`)
 			}
