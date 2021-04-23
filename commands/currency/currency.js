@@ -1,10 +1,9 @@
 const currency = require("../../controllers/currency");
-const ledger = require("../../controllers/ledger");
 const errors = require("../../controllers/error");
 
 module.exports = {
 	name: 'currency',
-	description: 'Updates balance for a given user.',
+	description: 'Add, update, or remove currency for a given user.',
     args: true,
     usage: '<action> <amount> <user>',
 	async execute(message, args) {
@@ -15,7 +14,7 @@ module.exports = {
 		const amount = args[1];
 
 		try{
-			let doesUserExist = await currency.checkUserWalletExistence(target);
+			let doesUserExist = await currency.getCurrencyById(target);
 			if(!moderators.includes(author.id)){
 				message.channel.send(`Beep boop. User does not have admin permissions to perform this command.`)
 			}else if(doesUserExist.rows.length < 1){
@@ -32,11 +31,7 @@ module.exports = {
 					return message.channel.send(`Adding negative numbers is weird. Stop that.`);
 				}
 				let addToUserWallet = await currency.addCurrency(amount, target);
-				message.channel.send(`${author.tag} has successfully added ${amount} Pokédollars to ${target.tag}'s wallet.`);
-
-				message.channel.send(`Updating ${target.tag}'s currency ledger.`);
-				let updateUserCurrencyLedger = await ledger.updateLedger(target, action, amount, author);
-				message.channel.send(`${target.tag}'s currency ledger has been successfully updated. Use !ledger to see a history of ${target.tag}'s currency.`);
+				message.channel.send(`${author.username} has successfully added ${amount} Pokédollars to ${target.username}'s wallet.`);
 			}catch (err){
 				console.error(err.message)
 				return errors.errorMessage(message)
@@ -46,31 +41,20 @@ module.exports = {
 				if (amount < 0){
 					return message.channel.send(`Updating to a negative number is weird. Stop that.`);
 				}
-				let getUserCurrencyAmount = await currency.getCurrencyById(target);
-				let currentUserCurrency = getUserCurrencyAmount.rows[0].currency;
-				message.channel.send(`Updating ${target.tag}'s wallet from ${currentUserCurrency} to ${amount} Pokédollars`);
 				let updateUserCurrency = await currency.updateCurrency(amount, target);
-				message.channel.send(`${author.tag} has successfully updated ${target.tag}'s wallet to ${amount} Pokédollars.`);
-
-				message.channel.send(`Updating ${target.tag}'s currency ledger.`);
-				let updateUserCurrencyLedger = await ledger.updateLedger(target, action, amount, author);
-				message.channel.send(`${target.tag}'s currency ledger has been successfully updated. Use !ledger to see a history of ${target.tag}'s currency.`);
+				message.channel.send(`${author.username} has successfully updated ${target.username}'s wallet to ${amount} Pokédollars.`);
 			}catch (err){
 				console.error(err.message)
 				return errors.errorMessage(message)
 			}			
 		}else if (action === 'remove'){
 			try{
-                let currencyAmountCheck = await currency.checkUserWalletExistence(target);
+                let currencyAmountCheck = await currency.getCurrencyById(target);
                 if (currencyAmountCheck.rows[0].currency - amount < 0){
                     return message.channel.send(`The currency to be removed cannot reduce the total to below zero.`);
                 }
 				let removeFromUserWallet = await currency.removeCurrency(amount, target);
-				message.channel.send(`${author.tag} has successfully removed ${amount} Pokédollars from ${target.tag}'s wallet.`);
-
-				message.channel.send(`Updating ${target.tag}'s currency ledger.`);
-				let updateUserCurrencyLedger = await ledger.updateLedger(target, action, amount, author);
-				message.channel.send(`${target.tag}'s currency ledger has been successfully updated. Use !ledger to see a history of ${target.tag}'s currency.`);
+				message.channel.send(`${author.username} has successfully removed ${amount} Pokédollars from ${target.username}'s wallet.`);
 			}catch (err){
 				console.error(err.message)
 				return errors.errorMessage(message)
