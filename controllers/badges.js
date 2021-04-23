@@ -16,6 +16,14 @@ exports.getBadgesById = async (target) => {
     return getBadgesResponse
 }
 
+exports.checkBadge = async (target, badgeName) => {
+    let checkBadgeResponse = db.query(
+        'SELECT * FROM main.badges WHERE user_id = $1 AND badge_name = $2',
+        [`${target.id}`, `${badgeName}`]
+    )
+    return checkBadgeResponse
+}
+
 exports.addBadges = async (target, badgeCategory, badgeName) => {
     let addBadgesResponse = db.query(
         'INSERT INTO main.badges (user_id, user_name, badge_category, badge_name, earned_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',

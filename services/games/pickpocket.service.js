@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
-const inventory = require('../../commands/inventory/inventory');
+const badges = require("../../controllers/badges");
+const currency = require("../../controllers/currency");
+const inventory = require("../../controllers/inventory");
 
 exports.pickpocket = async (author, target) => {
     let potionOfShielding = await inventory.itemAmountCheckTarget(target, 'potion_of_shielding').amount
@@ -39,68 +41,151 @@ exports.pickpocket = async (author, target) => {
     }else if (roll <= 75){
         return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but tripped on a dragon egg - oof!`);
     }else if (roll <= 80){
-        // make sure limit of 10 is enforced
-        let lockPickPack = await inventory.addItemToAuthor(1, author, 'lock_picks');
+        const reward = 1
+        let lockPickLimit = await inventory.itemLimitCheck('lock_picks').item_limit;
+        let authorLockPickCount = await inventory.itemAmountCheckAuthor(author, 'lock_picks').amount;
+        if (authorLockPickCount + reward > lockPickLimit){
+            let addCurrency = await currency.addCurrency(reward, author);
+            return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found ${reward} Pokédollar!`);
+        }
+        let lockPickPack = await inventory.addItemToAuthor(reward, author, 'lock_picks');
         return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a Lock Pick!`);
     }else if (roll <= 85){
-        // make sure limit of 10 is enforced
-        let lockPickPack = await inventory.addItemToAuthor(2, author, 'lock_picks');
-        return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pack of 2 Lock Picks!`);
+        const reward = 2;
+        let lockPickLimit = await inventory.itemLimitCheck('lock_picks').item_limit;
+        let authorLockPickCount = await inventory.itemAmountCheckAuthor(author, 'lock_picks').amount;
+        if (authorLockPickCount + reward > lockPickLimit){
+            const amount = lockPickLimit - authorLockPickCount;
+            let lockPickPack = await inventory.addItemToAuthor(amount, author, 'lock_picks');
+            const currencyAmount = reward - amount;
+            let addCurrency = await currency.addCurrency(currencyAmount, author);
+            return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
+        }
+        let lockPickPack = await inventory.addItemToAuthor(reward, author, 'lock_picks');
+        return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pack of ${reward} Lock Picks!`);
     }else if (roll <= 90){
-        // make sure limit of 10 is enforced
-        let lockPickPack = await inventory.addItemToAuthor(3, author, 'lock_picks');
-        return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pack of 3 Lock Picks!`);
+        const reward = 3;
+        let lockPickLimit = await inventory.itemLimitCheck('lock_picks').item_limit;
+        let authorLockPickCount = await inventory.itemAmountCheckAuthor(author, 'lock_picks').amount;
+        if (authorLockPickCount + reward > lockPickLimit){
+            const amount = lockPickLimit - authorLockPickCount;
+            let lockPickPack = await inventory.addItemToAuthor(amount, author, 'lock_picks');
+            const currencyAmount = reward - amount;
+            let addCurrency = await currency.addCurrency(currencyAmount, author);
+            return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
+        }
+        let lockPickPack = await inventory.addItemToAuthor(reward, author, 'lock_picks');
+        return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pack of ${reward} Lock Picks!`);
     }else if (roll <= 95){
-        // make sure limit of 10 is enforced
-        let lockPickPack = await inventory.addItemToAuthor(5, author, 'lock_picks');
-        return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pack of 5 Lock Picks!`);
+        const reward = 5;
+        let lockPickLimit = await inventory.itemLimitCheck('lock_picks').item_limit;
+        let authorLockPickCount = await inventory.itemAmountCheckAuthor(author, 'lock_picks').amount;
+        if (authorLockPickCount + reward > lockPickLimit){
+            const amount = lockPickLimit - authorLockPickCount;
+            let lockPickPack = await inventory.addItemToAuthor(amount, author, 'lock_picks');
+            const currencyAmount = reward - amount;
+            let addCurrency = await currency.addCurrency(currencyAmount, author);
+            return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+        }
+        let lockPickPack = await inventory.addItemToAuthor(reward, author, 'lock_picks');
+        return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pack of ${reward} Lock Picks!`);
     }else if (roll <= 100){
-        // make sure limit of 10 is enforced
-        let lockPickPack = await inventory.addItemToAuthor(10, author, 'lock_picks');
-        return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pack of 10 Lock Picks!`);
+        const reward = 10;
+        let lockPickLimit = await inventory.itemLimitCheck('lock_picks').item_limit;
+        let authorLockPickCount = await inventory.itemAmountCheckAuthor(author, 'lock_picks').amount;
+        if (authorLockPickCount + reward > lockPickLimit){
+            const amount = lockPickLimit - authorLockPickCount;
+            let lockPickPack = await inventory.addItemToAuthor(amount, author, 'lock_picks');
+            const currencyAmount = reward - amount;
+            let addCurrency = await currency.addCurrency(currencyAmount, author);
+            return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+        }
+        let lockPickPack = await inventory.addItemToAuthor(reward, author, 'lock_picks');
+        return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pack of ${reward} Lock Picks!`);
     }else if (roll <= 105){
-        // add code stuff to make the message true
-        // if target does not have enough currency, steal everything they have left and return before final message
-        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal 1 Pokédollar!`);
+        const reward = 1;
+        let checkTargetCurrency = await currency.getCurrencyById(target)
+        if (checkTargetCurrency < reward){
+            return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and tried to steal ${reward} Pokédollar, but ${target.tag} didn't have any!`);
+        }
+        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal ${reward} Pokédollar!`);
     }else if (roll <= 110){
-        // add code stuff to make the message true
-        // if target does not have enough currency, steal everything they have left and return before final message
-        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal 5 Pokédollars!`);
+        const reward = 5;
+        let checkTargetCurrency = await currency.getCurrencyById(target).amount
+        if (checkTargetCurrency < reward){
+            let stealCurrency = await currency.transferCurrency(checkTargetCurrency, target, author)
+            return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and tried to steal ${reward} Pokédollars, but ${target.tag} only had $${checkTargetCurrency}!`);
+        }
+        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal ${reward} Pokédollars!`);
     }else if (roll <= 115){
-        // add code stuff to make the message true
-        // if target does not have enough currency, steal everything they have left and return before final message
-        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal 10 Pokédollars!`);
+        const reward = 10;
+        let checkTargetCurrency = await currency.getCurrencyById(target).amount
+        if (checkTargetCurrency < reward){
+            let stealCurrency = await currency.transferCurrency(checkTargetCurrency, target, author)
+            return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and tried to steal ${reward} Pokédollars, but ${target.tag} only had $${checkTargetCurrency}`);
+        }
+        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal ${reward} Pokédollars!`);
     }else if (roll <= 120){
-        // add code stuff to make the message true
-        // if target does not have enough currency, steal everything they have left and return before final message
-        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal 15 Pokédollars!`);
+        const reward = 15;
+        let checkTargetCurrency = await currency.getCurrencyById(target).amount
+        if (checkTargetCurrency < reward){
+            let stealCurrency = await currency.transferCurrency(checkTargetCurrency, target, author)
+            return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and tried to steal ${reward} Pokédollars, but ${target.tag} only had $${checkTargetCurrency}`);
+        }
+        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal ${reward} Pokédollars!`);
     }else if (roll <= 125){
-        // add code stuff to make the message true
-        // if target does not have enough currency, steal everything they have left and return before final message
-        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal 20 Pokédollars!`);
+        const reward = 20;
+        let checkTargetCurrency = await currency.getCurrencyById(target).amount
+        if (checkTargetCurrency < reward){
+            let stealCurrency = await currency.transferCurrency(checkTargetCurrency, target, author)
+            return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and tried to steal ${reward} Pokédollars, but ${target.tag} only had $${checkTargetCurrency}`);
+        }
+        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal ${reward} Pokédollars!`);
     }else if (roll <= 130){
-        // add code stuff to make the message true
-        // if target does not have enough currency, steal everything they have left and return before final message
-        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal 25 Pokédollars!`);
+        const reward = 25;
+        let checkTargetCurrency = await currency.getCurrencyById(target).amount
+        if (checkTargetCurrency < reward){
+            let stealCurrency = await currency.transferCurrency(checkTargetCurrency, target, author)
+            return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and tried to steal ${reward} Pokédollars, but ${target.tag} only had $${checkTargetCurrency}`);
+        }
+        return message.channel.send(`${author.tag} sneaks up behind ${target.tag} and manages to steal ${reward} Pokédollars!`);
     }else if (roll <= 135){
-        // add code stuff to make the message true
-        return message.channel.send(`${author.tag} considered pickpocketing ${target.tag}, but ${target.tag} convinced ${author.tag} to team up instead.\nYou both go on a heist and earn 10 Pokédollars each!`);
+        const reward = 10;
+        let addCurrencyToAuthor = await currency.addCurrency(reward, author);
+        let addCurrencyToTarget = await currency.addCurrency(reward, target);
+        return message.channel.send(`${author.tag} considered pickpocketing ${target.tag}, but ${target.tag} convinced ${author.tag} to team up instead.\nYou both go on a heist and earn ${reward} Pokédollars each!`);
     }else if (roll <= 140){
-        // add code stuff to make the message true
-        return message.channel.send(`${author.tag} considered pickpocketing ${target.tag}, but ${target.tag} convinced ${author.tag} to team up instead.\nYou both go on a heist and earn 25 Pokédollars each!`);
+        const reward = 25;
+        let addCurrencyToAuthor = await currency.addCurrency(reward, author);
+        let addCurrencyToTarget = await currency.addCurrency(reward, target);
+        return message.channel.send(`${author.tag} considered pickpocketing ${target.tag}, but ${target.tag} convinced ${author.tag} to team up instead.\nYou both go on a heist and earn ${reward} Pokédollars each!`);
     }else if (roll <= 145){
-        // add code stuff to make the message true
-        return message.channel.send(`${author.tag} considered pickpocketing ${target.tag}, but ${target.tag} convinced ${author.tag} to team up instead.\nYou both go on a heist and earn 50 Pokédollars each!`);
+        const reward = 50;
+        let addCurrencyToAuthor = await currency.addCurrency(reward, author);
+        let addCurrencyToTarget = await currency.addCurrency(reward, target);
+        return message.channel.send(`${author.tag} considered pickpocketing ${target.tag}, but ${target.tag} convinced ${author.tag} to team up instead.\nYou both go on a heist and earn ${reward} Pokédollars each!`);
     }else if (roll <= 149){
-        // add code stuff to make the message true
-        return message.channel.send(`${author.tag} considered pickpocketing ${target.tag}, but ${target.tag} convinced ${author.tag} to team up instead.\nYou both go on a heist and earn 100 Pokédollars each!`);
+        const reward = 100;
+        let addCurrencyToAuthor = await currency.addCurrency(reward, author);
+        let addCurrencyToTarget = await currency.addCurrency(reward, target);
+        return message.channel.send(`${author.tag} considered pickpocketing ${target.tag}, but ${target.tag} convinced ${author.tag} to team up instead.\nYou both go on a heist and earn ${reward} Pokédollars each!`);
     }else if (roll <= 150){
-        // add code stuff to make the message true
-        // if target already has gloves, give them 2500 currency instead
+        let authorGlovesCount = await inventory.itemAmountCheckAuthor(author, 'gloves').amount;
+        if (authorGlovesCount > 0){
+            const reward = 2500;
+            let addCurrency = await currency.addCurrency(reward, author);
+            return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found ${reward} Pokédollars! Wow!`);
+        }
+        let addGlovesToAuthor = await inventory.addItemToAuthor(1, author, 'gloves');
         return message.channel.send(`${author.tag} tried to pickpocket ${target.tag}, but got distracted by something on the ground.\n${author.tag} found a pair of Gloves. Woah, these are really rare!`);
     }else if (roll <= 155){
-        // add code stuff to make the message true
+        let authorBadgeCount = await inventory.badgeCheck(author, 'master_thief_badge').amount;
+        if (authorBadgeCount > 0){
+            const reward = 5000;
+            let addCurrency = await currency.addCurrency(reward, author);
+            return message.channel.send(`${author.tag} has once again completed the ultimate heist.\n${author.tag} earns ${reward} Pokédollars! Congratulations!`);
+        }
+        let addBadgeToAuthor = await badges.addBadges(author, 'games', 'master_thief_badge');
         return message.channel.send(`After so long, ${author.tag} has completed the ultimate heist.\n${author.tag} has earned the Master Thief Badge. Congratulations!`);
     }
-
 }

@@ -56,6 +56,14 @@ exports.itemAmountCheck = async (target, itemCategory, itemName) => {
     return itemAmountCheckResponse
 }
 
+exports.itemLimitCheck = async (itemName) => {
+    let itemLimitCheckResponse = db.query(
+        'SELECT item_limit FROM main.shop WHERE item_name = $1',
+        [`${itemName}`]
+    )
+    return itemLimitCheckResponse
+}
+
 exports.itemAmountCheckAuthor = async (author, itemName) => {
     let itemAmountCheckAuthorResponse = db.query(
         'SELECT * FROM main.inventory WHERE user_id = $1 AND item_name = $2',
