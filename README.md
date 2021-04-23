@@ -14,7 +14,9 @@ TODO
 [x] make sure item amounts cannot go below 0
 [x] update ledger table to have a timestamp
 [x] update ledger to only return the latest 10 results
+
 ~~[] update currency with reason_awarded field~~
+
 [x] create items file (sword, gem encrusted sword, strongest potion, armor) or database table
 [x] add item limit for certain items, ie only one encrusted sword, 10 strongest potions, etc.
 [x] create shop table
