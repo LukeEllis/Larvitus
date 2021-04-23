@@ -5,6 +5,7 @@ LOOK AT GAMEBOI CODE TO UNDERSTAND CANVAS GENERATION
 
 Total time spent making bot:
 as of 4/22/2021 - 10 hours
+4/23/2021 - 12.5 hours
 
 TODO
 [x] create inventory 
@@ -15,15 +16,17 @@ TODO
 [x] update ledger to only return the latest 10 results
 ~~[] update currency with reason_awarded field~~
 [x] create items file (sword, gem encrusted sword, strongest potion, armor) or database table
- - [x] add item limit for certain items, ie only one encrusted sword, 10 strongest potions, etc.
+[x] add item limit for certain items, ie only one encrusted sword, 10 strongest potions, etc.
 [x] create shop table
 [] create item buy/shop display
 [] create games
- - [] dragonslayer
- - [] mine
- - [] pickpocket
-   - [] add PvP flag for users with 24 hr cooldown
+[] dragonslayer
+[] mine
+[] pickpocket
+[] add PvP flag for users with 24 hr cooldown
 [] add item functionality into games
+[] calculate currency gain rate
+[] calculate chance
 
 CANVAS TODO
 - [] update badges to show badge case using Canvas
