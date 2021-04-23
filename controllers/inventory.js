@@ -48,10 +48,74 @@ exports.removeFromInventory = async (target,  itemCategory, itemName, amount) =>
     return removeFromInventoryResponse
 }
 
-exports.itemAmountCheck = async (target,  itemCategory, itemName) => {
+exports.itemAmountCheck = async (target, itemCategory, itemName) => {
     let itemAmountCheckResponse = db.query(
         'SELECT * FROM main.inventory WHERE user_id = $1 AND item_category = $2 AND item_name = $3',
         [`${target.id}`, `${itemCategory}`, `${itemName}`]
     )
     return itemAmountCheckResponse
+}
+
+exports.itemAmountCheckAuthor = async (author, itemName) => {
+    let itemAmountCheckAuthorResponse = db.query(
+        'SELECT * FROM main.inventory WHERE user_id = $1 AND item_name = $2',
+        [`${author.id}`, `${itemName}`]
+    )
+    return itemAmountCheckAuthorResponse
+}
+
+exports.itemAmountCheckTarget = async (target, itemName) => {
+    let itemAmountCheckTargetResponse = db.query(
+        'SELECT * FROM main.inventory WHERE user_id = $1 AND item_name = $2',
+        [`${target.id}`, `${itemName}`]
+    )
+    return itemAmountCheckTargetResponse
+}
+
+exports.addItemToAuthor = async (amount, author, itemName) => {
+    let addItemToAuthorResponse = db.query(
+        'UPDATE main.inventory SET amount = amount + $1 WHERE user_id = $2 item_name = $3 RETURNING *',
+        [`${amount}`, `${author.id}`, `${itemName}`]
+    )
+    return addItemToAuthorResponse
+}
+
+exports.addItemToTarget = async (amount, target, itemName) => {
+    let addItemToTargetResponse = db.query(
+        'UPDATE main.inventory SET amount = amount + $1 WHERE user_id = $2 item_name = $3 RETURNING *',
+        [`${amount}`, `${target.id}`, `${itemName}`]
+    )
+    return addItemToTargetResponse
+}
+
+exports.removeAllOfOneItemFromAuthor = async (author, itemName) => {
+    let removeAllOfOneItemFromAuthorResponse = db.query(
+        'UPDATE main.inventory SET amount = $1 WHERE user_id = $2 item_name = $3 RETURNING *',
+        [0, `${author.id}`, `${itemName}`]
+    )
+    return removeAllOfOneItemFromAuthorResponse
+}
+
+exports.removeAllOfOneItemFromTarget = async (target, itemName) => {
+    let removeAllOfOneItemFromTargetResponse = db.query(
+        'UPDATE main.inventory SET amount = $1 WHERE user_id = $2 item_name = $3 RETURNING *',
+        [0, `${target.id}`, `${itemName}`]
+    )
+    return removeAllOfOneItemFromTargetResponse
+}
+
+exports.removeItemsFromAuthor = async (amount, author, itemName) => {
+    let removeItemsFromAuthorResponse = db.query(
+        'UPDATE main.inventory SET amount = amount - $1 WHERE user_id = $2 item_name = $3 RETURNING *',
+        [`${amount}`, `${author.id}`, `${itemName}`]
+    )
+    return removeItemsFromAuthorResponse
+}
+
+exports.removeItemsFromTarget = async (amount, target, itemName) => {
+    let removeItemsFromTargetResponse = db.query(
+        'UPDATE main.inventory SET amount = amount - $1 WHERE user_id = $2 item_name = $3 RETURNING *',
+        [`${amount}`, `${target.id}`, `${itemName}`]
+    )
+    return removeItemsFromTargetResponse
 }
