@@ -17,8 +17,8 @@ TODO
 - [x] create items file (sword, gem encrusted sword, strongest potion, armor) or database table
 - [x] add item limit for certain items, ie only one encrusted sword, 10 strongest potions, etc.
 - [x] create shop table
-- [] smoosh functions that duplicate code
-- [] create pickpocket command and move code from services to command
+- [x] smoosh functions that duplicate code
+- [x] create pickpocket command and move code from services to command
 - [] add logic to make sure badges being added are valid (badgeVerify function?)
 - [] create item buy/shop display
 - [] dragonslayer game

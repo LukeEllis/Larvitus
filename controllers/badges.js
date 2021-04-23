@@ -1,15 +1,7 @@
 const db = require("../services/postgres.service");
 
-exports.checkUserBadgesExistence = async (target) => {
-    let badgeCheck = db.query(
-        'SELECT * FROM main.badges WHERE user_id = $1',
-        [`${target.id}`]
-    )
-    return badgeCheck
-}
-
 exports.getBadgesById = async (target) => {
-    let getBadgesResponse = db.query(
+    let getBadgesResponse = await db.query(
         'SELECT * FROM main.badges WHERE user_id = $1',
         [`${target.id}`]
     )
@@ -17,7 +9,7 @@ exports.getBadgesById = async (target) => {
 }
 
 exports.checkBadge = async (target, badgeName) => {
-    let checkBadgeResponse = db.query(
+    let checkBadgeResponse = await db.query(
         'SELECT * FROM main.badges WHERE user_id = $1 AND badge_name = $2',
         [`${target.id}`, `${badgeName}`]
     )
@@ -25,15 +17,15 @@ exports.checkBadge = async (target, badgeName) => {
 }
 
 exports.addBadges = async (target, badgeCategory, badgeName) => {
-    let addBadgesResponse = db.query(
+    let addBadgesResponse = await db.query(
         'INSERT INTO main.badges (user_id, user_name, badge_category, badge_name, earned_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        [`${target.id}`, `${target.tag}`, `${badgeCategory}`, `${badgeName}`, new Date()]
+        [`${target.id}`, `${target.username}`, `${badgeCategory}`, `${badgeName}`, new Date()]
     )
     return addBadgesResponse
 }
 
 exports.removeBadges = async (target, badgeName) => {
-    let removeBadgesResponse = db.query(
+    let removeBadgesResponse = await db.query(
         'DELETE FROM main.badges WHERE user_id = $1 AND badge_category = $2 AND badge_name = $3 RETURNING *',
         [`${target.id}`, `${badgeCategory}`, `${badgeName}`]
     )
@@ -53,6 +45,9 @@ exports.formatBadgeCategories = async (getBadges) => {
     }else if(getBadges.rows[i-1].badge_category === 'baking'){
         let category = 'Baking';
         return category
+    }else if(getBadges.rows[i-1].badge_category === 'games'){
+        let category = 'Games';
+        return category
     }
 }
 
@@ -71,6 +66,9 @@ exports.formatBadgeNames = async (getBadges) => {
         return category
     }else if(getBadges.rows[i-1].badge_name === 'baking_1_badge'){
         let category = 'Baking Badge 1';
+        return category
+    }else if(getBadges.rows[i-1].badge_name === 'master_thief_badge'){
+        let category = 'Master Thief Badge';
         return category
     }
 }
