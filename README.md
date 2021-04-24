@@ -43,3 +43,7 @@ LONG TODO
 - [] add varied cooldowns for Discord/Twitch to incentivize using them on livestreams
 - [] update inventory to be viewable in Twitch
 - [] deploy to AWS
+
+FionaRainDrop is targetting Bluechromed
+roll 87
+Cannot read property 'amount' of undefined

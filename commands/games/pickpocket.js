@@ -10,20 +10,27 @@ module.exports = {
     args: true,
     usage: '<user>',
 	async execute(message, args) {
+
         const target = message.mentions.users.first();
 		const author = message.author;
+        console.log(`${author.username} is targetting ${target.username}`)
 
         if (target.id === author.id){
             return message.channel.send(`You think you're slick, huh?`);
         }
 
-        let doesUserExist = await currency.getCurrencyById(target);
-        
+        let doesUserExist = await currency.getCurrencyById(author);
         if(doesUserExist.rows.length < 1){
+            return message.channel.send(`You need a wallet before you can be a thief. Get your wallet with the !init command.`)
+        }
+
+        let doesTargetExist = await currency.getCurrencyById(target);
+        if(doesTargetExist.rows.length < 1){
             return message.channel.send(`You can't steal from someone who doesn't have a wallet. Wait until ${target.username} uses the !init command.`)
         }
 
 		try{
+            
             let potionOfShielding = await inventory.itemCheck(target, 'potion_of_shielding')
             if (potionOfShielding.rows.length > 0){
                 if (potionOfShielding.rows[0].amount > 0){
@@ -45,7 +52,6 @@ module.exports = {
         
             let lockPick = await inventory.itemCheck(author, 'lock_pick');
             if (lockPick.rows.length > 0){
-                console.log('lockPick.rows.length', lockPick.rows.length);
                 if (lockPick.rows[0].amount > 0){
                     roll = roll + (5*lockPick.rows[0].amount);
                     console.log('roll + lockPick', roll);
@@ -64,7 +70,9 @@ module.exports = {
             }else if (roll <= 75){
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but tripped on a dragon egg - oof!`);
             }else if (roll <= 80){
+
                 const reward = 1;
+
                 if (lockPick.rows.length > 0){
                     let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
                     let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
@@ -73,17 +81,24 @@ module.exports = {
                         return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${reward} Pokédollar!`);
                     }
                 }
+
                 if (lockPick.rows.length < 1){
                     let createItemPickEntry = await inventory.createItemEntry(author, 'lock_pick', reward);
                     return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a Lock Pick!`);
                 }
+
                 let lockPickPack = await inventory.addToInventory(author, 'lock_pick', reward);
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a Lock Pick!`);
+            
             }else if (roll <= 85){
+
                 const reward = 2;
+
                 if (lockPick.rows.length > 0){
+
                     let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
                     let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
+
                     if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
                         const amount = lockPickLimit.rows[0].item_limit - authorLockPickCount.rows[0].amount;
                         let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
@@ -92,10 +107,19 @@ module.exports = {
                         return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
                     }
                 }
+
+                if (lockPick.rows.length < 1){
+                    let createItemPickEntry = await inventory.createItemEntry(author, 'lock_pick', reward);
+                    return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pack of ${reward} Lock Pick!`);
+                }
+
                 let lockPickPack = await inventory.addToInventory(author, 'lock_pick', reward);
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pack of ${reward} Lock Picks!`);
+            
             }else if (roll <= 90){
+
                 const reward = 3;
+
                 let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
                 let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
                 if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
@@ -105,10 +129,19 @@ module.exports = {
                     let addCurrency = await currency.addCurrency(currencyAmount, author);
                     return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
                 }
+
+                if (lockPick.rows.length < 1){
+                    let createItemPickEntry = await inventory.createItemEntry(author, 'lock_pick', reward);
+                    return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pack of ${reward} Lock Pick!`);
+                }
+
                 let lockPickPack = await inventory.addToInventory(author, 'lock_pick', reward);
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pack of ${reward} Lock Picks!`);
+            
             }else if (roll <= 95){
+
                 const reward = 5;
+
                 let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
                 let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
                 if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
@@ -118,12 +151,21 @@ module.exports = {
                     let addCurrency = await currency.addCurrency(currencyAmount, author);
                     return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
                 }
+
+                if (lockPick.rows.length < 1){
+                    let createItemPickEntry = await inventory.createItemEntry(author, 'lock_pick', reward);
+                    return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pack of ${reward} Lock Pick!`);
+                }
+
                 let lockPickPack = await inventory.addToInventory(author, 'lock_pick', reward);
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pack of ${reward} Lock Picks!`);
+            
             }else if (roll <= 100){
                 const reward = 10;
+
                 let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
                 let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
+
                 if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
                     const amount = lockPickLimit.rows[0].item_limit - authorLockPickCount.rows[0].amount;
                     let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
@@ -131,93 +173,137 @@ module.exports = {
                     let addCurrency = await currency.addCurrency(currencyAmount, author);
                     return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
                 }
+
+                if (lockPick.rows.length < 1){
+                    let createItemPickEntry = await inventory.createItemEntry(author, 'lock_pick', reward);
+                    return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pack of ${reward} Lock Pick!`);
+                }
+
                 let lockPickPack = await inventory.addToInventory(author, 'lock_pick', reward);
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pack of ${reward} Lock Picks!`);
+            
             }else if (roll <= 105){
+
                 const reward = 1;
+
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
                     return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollar, but ${target.username} didn't have any!`);
                 }
+
                 let stealCurrency = await currency.removeCurrency(reward, target)
                 let gainCurrency = await currency.addCurrency(reward, author)
                 return message.channel.send(`${author.username} sneaks up behind ${target.username} and manages to steal ${reward} Pokédollar!`);
+            
             }else if (roll <= 110){
+
                 const reward = 5;
+
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
                     let stealCurrency = await currency.removeCurrency(checkTargetCurrency.rows[0].currency, target)
                     let gainCurrency = await currency.addCurrency(checkTargetCurrency.rows[0].currency, author)
-                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency}!`);
+                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency.rows[0].currency}!`);
                 }
+
                 let stealCurrency = await currency.removeCurrency(reward, target)
                 let gainCurrency = await currency.addCurrency(reward, author)
                 return message.channel.send(`${author.username} sneaks up behind ${target.username} and manages to steal ${reward} Pokédollars!`);
+            
             }else if (roll <= 115){
+
                 const reward = 10;
+
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
                     let stealCurrency = await currency.removeCurrency(checkTargetCurrency.rows[0].currency, target)
                     let gainCurrency = await currency.addCurrency(checkTargetCurrency.rows[0].currency, author)
-                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency}`);
+                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency.rows[0].currency}`);
                 }
+
                 let stealCurrency = await currency.removeCurrency(reward, target)
                 let gainCurrency = await currency.addCurrency(reward, author)
                 return message.channel.send(`${author.username} sneaks up behind ${target.username} and manages to steal ${reward} Pokédollars!`);
+            
             }else if (roll <= 120){
+
                 const reward = 15;
+
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
                     let stealCurrency = await currency.removeCurrency(checkTargetCurrency.rows[0].currency, target)
                     let gainCurrency = await currency.addCurrency(checkTargetCurrency.rows[0].currency, author)
-                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency}`);
+                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency.rows[0].currency}`);
                 }
+
                 let stealCurrency = await currency.removeCurrency(reward, target)
                 let gainCurrency = await currency.addCurrency(reward, author)
                 return message.channel.send(`${author.username} sneaks up behind ${target.username} and manages to steal ${reward} Pokédollars!`);
+            
             }else if (roll <= 125){
+
                 const reward = 20;
+
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
                     let stealCurrency = await currency.removeCurrency(checkTargetCurrency.rows[0].currency, target)
                     let gainCurrency = await currency.addCurrency(checkTargetCurrency.rows[0].currency, author)
-                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency}`);
+                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency.rows[0].currency}`);
                 }
+
                 let stealCurrency = await currency.removeCurrency(reward, target)
                 let gainCurrency = await currency.addCurrency(reward, author)
                 return message.channel.send(`${author.username} sneaks up behind ${target.username} and manages to steal ${reward} Pokédollars!`);
+            
             }else if (roll <= 130){
+
                 const reward = 25;
+
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
                     let stealCurrency = await currency.removeCurrency(checkTargetCurrency.rows[0].currency, target)
                     let gainCurrency = await currency.addCurrency(checkTargetCurrency.rows[0].currency, author)
-                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency}`);
+                    return message.channel.send(`${author.username} sneaks up behind ${target.username} and tried to steal ${reward} Pokédollars, but ${target.username} only had $${checkTargetCurrency.rows[0].currency}`);
                 }
+
                 let stealCurrency = await currency.removeCurrency(reward, target)
                 let gainCurrency = await currency.addCurrency(reward, author)
                 return message.channel.send(`${author.username} sneaks up behind ${target.username} and manages to steal ${reward} Pokédollars!`);
+            
             }else if (roll <= 135){
+
                 const reward = 10;
+
                 let addCurrencyToAuthor = await currency.addCurrency(reward, author);
                 let addCurrencyToTarget = await currency.addCurrency(reward, target);
                 return message.channel.send(`${author.username} considered pickpocketing ${target.username}, but ${target.username} convinced ${author.username} to team up instead.\nYou both go on a heist and earn ${reward} Pokédollars each!`);
+            
             }else if (roll <= 140){
+
                 const reward = 25;
+
                 let addCurrencyToAuthor = await currency.addCurrency(reward, author);
                 let addCurrencyToTarget = await currency.addCurrency(reward, target);
                 return message.channel.send(`${author.username} considered pickpocketing ${target.username}, but ${target.username} convinced ${author.username} to team up instead.\nYou both go on a heist and earn ${reward} Pokédollars each!`);
+            
             }else if (roll <= 145){
+
                 const reward = 50;
+
                 let addCurrencyToAuthor = await currency.addCurrency(reward, author);
                 let addCurrencyToTarget = await currency.addCurrency(reward, target);
                 return message.channel.send(`${author.username} considered pickpocketing ${target.username}, but ${target.username} convinced ${author.username} to team up instead.\nYou both go on a heist and earn ${reward} Pokédollars each!`);
+            
             }else if (roll <= 149){
+
                 const reward = 100;
+
                 let addCurrencyToAuthor = await currency.addCurrency(reward, author);
                 let addCurrencyToTarget = await currency.addCurrency(reward, target);
                 return message.channel.send(`${author.username} considered pickpocketing ${target.username}, but ${target.username} convinced ${author.username} to team up instead.\nYou both go on a heist and earn ${reward} Pokédollars each!`);
+            
             }else if (roll <= 150){
+
                 let authorGlovesCount = await inventory.itemCheck(author, 'gloves');
                 if (authorGlovesCount.rows.length > 0){
                     if (authorGlovesCount.rows[0].amount > 0){
@@ -226,19 +312,24 @@ module.exports = {
                         return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${reward} Pokédollars! Wow!`);
                     }
                 }
+
                 if (authorGlovesCount.rows.length < 1){
                     let createItemPickEntry = await inventory.createItemEntry(author, 'gloves', 1);
                     return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pair of Gloves. Woah, these are really rare!`);
                 }
+
                 let addGlovesToAuthor = await inventory.addToInventory(author, 'gloves', 1);
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pair of Gloves. Woah, these are really rare!`);
+            
             }else if (roll >= 151){
+
                 let authorBadgeCount = await badges.checkBadge(author, 'master_thief_badge');
                 if (authorBadgeCount.rows.length > 0){
                     const reward = 5000;
                     let addCurrency = await currency.addCurrency(reward, author);
                     return message.channel.send(`${author.username} has once again completed the ultimate heist.\n${author.username} earns ${reward} Pokédollars! Congratulations!`);
                 }
+
                 let addBadgeToAuthor = await badges.addBadges(author, 'games', 'master_thief_badge');
                 return message.channel.send(`After so long, ${author.username} has completed the ultimate heist.\n${author.username} has earned the Master Thief Badge. Congratulations!`);
             }

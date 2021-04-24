@@ -16,7 +16,7 @@ module.exports = {
 		try{
 			let doesUserExist = await currency.getCurrencyById(target);
 			if(!moderators.includes(author.id)){
-				message.channel.send(`Beep boop. User does not have admin permissions to perform this command.`)
+				return message.channel.send(`Beep boop. User does not have admin permissions to perform this command.`)
 			}else if(doesUserExist.rows.length < 1){
 				return message.channel.send(`User not found! User must initialize themselves with the !init command.`)
 			}
