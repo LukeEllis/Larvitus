@@ -26,11 +26,10 @@ module.exports = {
 				.setTitle(`Badges`)
 				.setDescription(`<@${target.id}>`);
 			for (i = getBadges.rows.length; i > 0; i--){
-				let formatCategory = await badges.formatBadgeCategories(getBadges);
-				let formatName = await badges.formatBadgeNames(getBadges);
+				let getBadgeInformation = await badges.getBadgeByBadgeName(getBadges.rows[0].badge_name)
 				badgesEmbed.addFields(
 						{
-							name : `${formatCategory} Badge:`, value: `${formatName}\nEarned on ${getBadges.rows[i-1].earned_date}`, inline: false
+							name : `${getBadgeInformation.rows[i-1].category_display_name} Badge:`, value: `${getBadgeInformation.rows[i-1].badge_display_name}\nEarned on ${getBadges.rows[i-1].earned_date}`, inline: false
 						}
 				)
 			}

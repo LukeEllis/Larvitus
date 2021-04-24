@@ -10,7 +10,7 @@ exports.createNewUserWallet = async (target) => {
 
 exports.getCurrencyById = async (target) => {
     let getCurrencyResponse = await db.query(
-        'SELECT user_id, currency FROM main.currency WHERE user_id = $1',
+        'SELECT * FROM main.currency WHERE user_id = $1',
         [target.id]
     )
     return getCurrencyResponse
@@ -38,4 +38,20 @@ exports.removeCurrency = async (amount, target) => {
         [`${amount}`, `${target.id}`]
     )
     return removeCurrencyResponse
+}
+
+exports.updatePvp = async (target, pvpFlag) => {
+    let updatePvpResponse = await db.query(
+        'UPDATE main.currency SET pvp = $1, pvp_time = current_timestamp WHERE user_id = $2 RETURNING *',
+        [`${pvpFlag}`, `${target.id}`]
+    )
+    return updatePvpResponse
+}
+
+exports.pvpDateCheck = async (target) => {
+    let pvpDateResponse = await db.query(
+        `SELECT pvp_time FROM main.currency WHERE user_id = $1 AND pvp_time < (current_timestamp - INTERVAL '1 DAY')`,
+        [`${target.id}`]
+    )
+    return pvpDateResponse
 }

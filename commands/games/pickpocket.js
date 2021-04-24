@@ -29,6 +29,16 @@ module.exports = {
             return message.channel.send(`You can't steal from someone who doesn't have a wallet. Wait until ${target.username} uses the !init command.`)
         }
 
+        let isPvpOn = await currency.getCurrencyById(author);
+        if (!isPvpOn.rows[0].pvp){
+            return message.channel.send(`You currently have PvP turned off. Use !pvp on to toggle.`)
+        }
+
+        let isPvpOnForTarget = await currency.getCurrencyById(target);
+        if (!isPvpOnForTarget.rows[0].pvp){
+            return message.channel.send(`${target.username} currently has PvP turned off. They can use !pvp on to toggle.`)
+        }
+
 		try{
             
             let potionOfShielding = await inventory.itemCheck(target, 'potion_of_shielding')
@@ -120,14 +130,18 @@ module.exports = {
 
                 const reward = 3;
 
-                let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
-                let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
-                if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
-                    const amount = lockPickLimit.rows[0].item_limit - authorLockPickCount.rows[0].amount;
-                    let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
-                    const currencyAmount = reward - amount;
-                    let addCurrency = await currency.addCurrency(currencyAmount, author);
-                    return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
+                if (lockPick.rows.length > 0){
+
+                    let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
+                    let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
+
+                    if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
+                        const amount = lockPickLimit.rows[0].item_limit - authorLockPickCount.rows[0].amount;
+                        let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
+                        const currencyAmount = reward - amount;
+                        let addCurrency = await currency.addCurrency(currencyAmount, author);
+                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
+                    }
                 }
 
                 if (lockPick.rows.length < 1){
@@ -142,14 +156,18 @@ module.exports = {
 
                 const reward = 5;
 
+                if (lockPick.rows.length > 0){
+
                 let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
                 let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
-                if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
-                    const amount = lockPickLimit.rows[0].item_limit - authorLockPickCount.rows[0].amount;
-                    let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
-                    const currencyAmount = reward - amount;
-                    let addCurrency = await currency.addCurrency(currencyAmount, author);
-                    return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+
+                    if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
+                        const amount = lockPickLimit.rows[0].item_limit - authorLockPickCount.rows[0].amount;
+                        let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
+                        const currencyAmount = reward - amount;
+                        let addCurrency = await currency.addCurrency(currencyAmount, author);
+                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+                    }
                 }
 
                 if (lockPick.rows.length < 1){
@@ -163,15 +181,18 @@ module.exports = {
             }else if (roll <= 100){
                 const reward = 10;
 
+                if (lockPick.rows.length > 0){
+
                 let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
                 let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
 
-                if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
-                    const amount = lockPickLimit.rows[0].item_limit - authorLockPickCount.rows[0].amount;
-                    let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
-                    const currencyAmount = reward - amount;
-                    let addCurrency = await currency.addCurrency(currencyAmount, author);
-                    return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+                    if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
+                        const amount = lockPickLimit.rows[0].item_limit - authorLockPickCount.rows[0].amount;
+                        let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
+                        const currencyAmount = reward - amount;
+                        let addCurrency = await currency.addCurrency(currencyAmount, author);
+                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+                    }
                 }
 
                 if (lockPick.rows.length < 1){
