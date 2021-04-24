@@ -4,8 +4,9 @@ Discord bot to handle events for Bluechromed
 LOOK AT GAMEBOI CODE TO UNDERSTAND CANVAS GENERATION
 
 Total time spent making bot:
-as of 4/22/2021 - 10 hours
-4/23/2021 - 14 hours
+- as of 4/22/2021 - 10 hours
+- 4/23/2021 - 19 hours
+- 4/24/2021 - 19 hours
 
 TODO
 - [x] create inventory 
@@ -19,15 +20,16 @@ TODO
 - [x] create shop table
 - [x] smoosh functions that duplicate code
 - [x] create pickpocket command and move code from services to command
-- [] add logic to make sure badges being added are valid (badgeVerify function?)
+- [x] add logic to make sure badges being added are valid (badgeVerify function?)
 - [] create item buy/shop display
 - [] dragonslayer game
 - [] mine game
 - [x] pickpocket game
-- [] add PvP flag for users with 24 hr cooldown
+- [x] add PvP flag for users with 24 hr cooldown
 - [x] add item functionality into games
 - [] calculate currency gain rate of games
 - [] calculate chances of game outcomes
+- [] make display dates WAY prettier
 
 CANVAS TODO
 - [] update badges to show badge case using Canvas

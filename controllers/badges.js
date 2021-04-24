@@ -16,59 +16,30 @@ exports.checkBadge = async (target, badgeName) => {
     return checkBadgeResponse
 }
 
-exports.addBadges = async (target, badgeCategory, badgeName) => {
+exports.addBadges = async (target, badgeName) => {
+    let getBadgeCategories = await db.query(
+        'SELECT badge_category FROM main.badge_case WHERE item_name = $1',
+        [`${badgeName}`]
+    )
     let addBadgesResponse = await db.query(
         'INSERT INTO main.badges (user_id, user_name, badge_category, badge_name, earned_date) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        [`${target.id}`, `${target.username}`, `${badgeCategory}`, `${badgeName}`, new Date()]
+        [`${target.id}`, `${target.username}`, `${getBadgeCategories.rows[0].badge_category}`, `${badgeName}`, new Date()]
     )
     return addBadgesResponse
 }
 
 exports.removeBadges = async (target, badgeName) => {
     let removeBadgesResponse = await db.query(
-        'DELETE FROM main.badges WHERE user_id = $1 AND badge_category = $2 AND badge_name = $3 RETURNING *',
-        [`${target.id}`, `${badgeCategory}`, `${badgeName}`]
+        'DELETE FROM main.badges WHERE user_id = $1 AND badge_name = $2 RETURNING *',
+        [`${target.id}`, `${badgeName}`]
     )
     return removeBadgesResponse
 }
 
-exports.formatBadgeCategories = async (getBadges) => {
-    if(getBadges.rows[i-1].badge_category === 'shiny_gym'){
-        let category = 'Shiny Gym';
-        return category
-    }else if(getBadges.rows[i-1].badge_category === 'showdown_gym'){
-        let category = 'Showdown Gym';
-        return category
-    }else if(getBadges.rows[i-1].badge_category === 'art'){
-        let category = 'Art';
-        return category
-    }else if(getBadges.rows[i-1].badge_category === 'baking'){
-        let category = 'Baking';
-        return category
-    }else if(getBadges.rows[i-1].badge_category === 'games'){
-        let category = 'Games';
-        return category
-    }
-}
-
-exports.formatBadgeNames = async (getBadges) => {
-    if(getBadges.rows[i-1].badge_name === 'blazing_blaziken_badge'){
-        let category = 'Blazing Blaziken Badge';
-        return category
-    }else if(getBadges.rows[i-1].badge_name === 'tyrannus_badge'){
-        let category = 'Tyrannus Badge';
-        return category
-    }else if(getBadges.rows[i-1].badge_name === 'rockin_out_badge'){
-        let category = `Rockin' Out Badge`;
-        return category
-    }else if(getBadges.rows[i-1].badge_name === 'art_1_badge'){
-        let category = 'Art Badge 1';
-        return category
-    }else if(getBadges.rows[i-1].badge_name === 'baking_1_badge'){
-        let category = 'Baking Badge 1';
-        return category
-    }else if(getBadges.rows[i-1].badge_name === 'master_thief_badge'){
-        let category = 'Master Thief Badge';
-        return category
-    }
+exports.getBadgeByBadgeName = async (badgeName) => {
+    let getBadgeByBadgeNameResponse = await db.query(
+        'SELECT * FROM main.badge_case WHERE badge_name = $1',
+        [`${badgeName}`]
+    )
+    return getBadgeByBadgeNameResponse
 }

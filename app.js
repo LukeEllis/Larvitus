@@ -1,7 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
-const CurrencyController = require('./controllers/currency')
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
