@@ -18,6 +18,8 @@ module.exports = {
 		try{
 			if(!moderators.includes(author.id)){
 				return message.channel.send(`Beep boop. User does not have admin permissions to perform this command.`)
+			}else if (amount < 0){
+				return message.channel.send(`Using negative numbers is weird. Stop that.`);
 			}
 		}catch (err){
 			console.error(err.message)
@@ -28,14 +30,8 @@ module.exports = {
 			try{
                 let itemCheck = await inventory.itemCheck(target, itemName);
                 if (itemCheck.rows.length < 1){
-                    if (amount < 0){
-                        return message.channel.send(`Adding negative numbers is weird. Stop that.`);
-                    }
                     let addItemToUserInventory = await inventory.createItemEntry(target, itemName, amount);
                     return message.channel.send(`${author.username} has successfully added ${amount}x ${itemName} to ${target.username}'s inventory. Congratulations!`);
-                }
-                if (amount < 0){
-                    return message.channel.send(`Adding negative numbers is weird. Stop that.`);
                 }
                 let updateUserInventory = await inventory.addToInventory(target, itemName, amount);
                 return message.channel.send(`${author.username} has successfully added ${amount}x ${itemName} to ${target.username}'s inventory. Congratulations!`);

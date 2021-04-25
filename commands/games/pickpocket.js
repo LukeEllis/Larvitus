@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const badges = require("../../controllers/badges");
 const currency = require("../../controllers/currency");
 const inventory = require("../../controllers/inventory");
+const shop = require("../../controllers/shop");
 const errors = require("../../controllers/error");
 
 module.exports = {
@@ -84,7 +85,7 @@ module.exports = {
                 const reward = 1;
 
                 if (lockPick.rows.length > 0){
-                    let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
+                    let lockPickLimit = await shop.itemLimitCheck('lock_pick');
                     let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
                     if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
                         let addCurrency = await currency.addCurrency(reward, author);
@@ -106,7 +107,7 @@ module.exports = {
 
                 if (lockPick.rows.length > 0){
 
-                    let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
+                    let lockPickLimit = await shop.itemLimitCheck('lock_pick');
                     let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
 
                     if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
@@ -132,7 +133,7 @@ module.exports = {
 
                 if (lockPick.rows.length > 0){
 
-                    let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
+                    let lockPickLimit = await shop.itemLimitCheck('lock_pick');
                     let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
 
                     if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
@@ -158,7 +159,7 @@ module.exports = {
 
                 if (lockPick.rows.length > 0){
 
-                let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
+                let lockPickLimit = await shop.itemLimitCheck('lock_pick');
                 let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
 
                     if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){
@@ -183,7 +184,7 @@ module.exports = {
 
                 if (lockPick.rows.length > 0){
 
-                let lockPickLimit = await inventory.itemLimitCheck('lock_pick');
+                let lockPickLimit = await shop.itemLimitCheck('lock_pick');
                 let authorLockPickCount = await inventory.itemCheck(author, 'lock_pick');
 
                     if (authorLockPickCount.rows[0].amount + reward > lockPickLimit.rows[0].item_limit){

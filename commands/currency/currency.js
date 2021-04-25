@@ -19,6 +19,8 @@ module.exports = {
 				return message.channel.send(`Beep boop. User does not have admin permissions to perform this command.`)
 			}else if(doesUserExist.rows.length < 1){
 				return message.channel.send(`User not found! User must initialize themselves with the !init command.`)
+			}else if (amount < 0){
+				return message.channel.send(`Using negative numbers is weird. Stop that.`);
 			}
 		}catch (err){
 			console.error(err.message)
@@ -27,9 +29,6 @@ module.exports = {
 
 		if (action === 'add'){
 			try{
-				if (amount < 0){
-					return message.channel.send(`Adding negative numbers is weird. Stop that.`);
-				}
 				let addToUserWallet = await currency.addCurrency(amount, target);
 				message.channel.send(`${author.username} has successfully added ${amount} Pokédollars to ${target.username}'s wallet.`);
 			}catch (err){
@@ -38,9 +37,6 @@ module.exports = {
 			}
 		}else if (action === 'update'){
 			try{
-				if (amount < 0){
-					return message.channel.send(`Updating to a negative number is weird. Stop that.`);
-				}
 				let updateUserCurrency = await currency.updateCurrency(amount, target);
 				message.channel.send(`${author.username} has successfully updated ${target.username}'s wallet to ${amount} Pokédollars.`);
 			}catch (err){
