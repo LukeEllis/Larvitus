@@ -7,10 +7,10 @@ exports.getShop = async () => {
     return getShopResponse
 }
 
-exports.getShopByCategory = async (category) => {
+exports.getShopByCategory = async (itemCategory) => {
     let getShopByCategoryResponse = await db.query(
         'SELECT * FROM main.shop WHERE item_category = $1 AND purchasable = true ORDER BY cost DESC',
-        [`${category}`]
+        [`${itemCategory}`]
     )
     return getShopByCategoryResponse
 }
@@ -29,4 +29,13 @@ exports.itemLimitCheck = async (itemName) => {
         [`${itemName}`]
     )
     return itemLimitCheckResponse
+}
+
+// Maybe keep for later?
+exports.filterItemsWithNoPower = async (itemCategory) => {
+    let filterItemsWithNoPowerResponse = await db.query(
+        'SELECT * from main.shop WHERE item_category = $1 AND item_power > 0',
+        [`${itemCategory}`]
+    )
+    return filterItemsWithNoPowerResponse
 }

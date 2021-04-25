@@ -21,21 +21,17 @@ module.exports = {
 
                 return message.channel.send(`You do not have any ${itemName} to sell.`);
 
-            }
-            
-            if(validSellAmount.rows.length > 0){
+            }else if (amount < 0){
+
+                return message.channel.send(`Using negative numbers is weird. Stop that.`);
+
+            }else{
 
                 if (validSellAmount.rows[0].amount < amount){
                     
                     return message.channel.send(`You only have ${validSellAmount.rows[0].amount}x ${itemName} to sell.`);
                 
                 }
-
-            }
-            
-            if (amount < 0){
-
-                return message.channel.send(`Using negative numbers is weird. Stop that.`);
 
             }
 

@@ -6,8 +6,8 @@ LOOK AT GAMEBOI CODE TO UNDERSTAND CANVAS GENERATION
 Total time spent making bot:
 - as of 4/22/2021 - 10 hours
 - 4/23/2021 - 19 hours
-- 4/24/2021 - 25 hours (7:30 pm)
-- 4/25/2021 - 24 hours
+- 4/24/2021 - 26 hours (8:30 pm)
+- 4/25/2021 - 26 hours
 
 TODO
 - [x] create inventory 
