@@ -44,14 +44,6 @@ exports.removeFromInventory = async (target, itemName, amount) => {
     return removeFromInventoryResponse
 }
 
-exports.itemLimitCheck = async (itemName) => {
-    let itemLimitCheckResponse = await db.query(
-        'SELECT item_limit FROM main.shop WHERE item_name = $1',
-        [`${itemName}`]
-    )
-    return itemLimitCheckResponse
-}
-
 exports.clearInventory = async (target, itemName) => {
     let clearInventoryResponse = await db.query(
         'UPDATE main.inventory SET amount = $1 WHERE user_id = $2 AND item_name = $3 RETURNING *',

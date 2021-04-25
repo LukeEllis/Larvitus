@@ -26,8 +26,6 @@ module.exports = {
 				.setTitle(`Inventory`)
 				.setDescription(`<@${target.id}>`);
 			for (i = getInventory.rows.length; i > 0; i--){
-				// let formatCategory = await inventory.formatBadgeCategories(getInventory);
-				// let formatName = await inventory.formatitemNames(getInventory);
 				inventoryEmbed.addFields(
 						{
 							name : `${getInventory.rows[i-1].item_category} Item:`, value: `${getInventory.rows[i-1].item_name} x${getInventory.rows[i-1].amount}`, inline: false
