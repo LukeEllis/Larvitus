@@ -8,7 +8,7 @@ Total time spent making bot:
 - 4/23/2021 - 19 hours
 - 4/24/2021 - 26 hours
 - 4/25/2021 - 38.5 hours
-- 4/26/2021 - 40 hours (3:30 pm)
+- 4/26/2021 - 41 hours (5:30 pm)
 
 TODO
 - [x] create inventory 
