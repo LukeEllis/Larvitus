@@ -343,7 +343,7 @@ module.exports = {
                 let addGlovesToAuthor = await inventory.addToInventory(author, 'gloves', 1);
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pair of Gloves. Woah, these are really rare!`);
             
-            }else if (150 < roll <= 155){
+            }else if (roll <= 155){
 
                 let authorBadgeCount = await badges.checkBadge(author, 'master_thief_badge');
                 if (authorBadgeCount.rows.length > 0){

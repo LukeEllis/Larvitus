@@ -7,6 +7,14 @@ exports.getShop = async () => {
     return getShopResponse
 }
 
+// Maybe keep for later?
+exports.getAllItemsWithPower = async () => {
+    let getAllItemsWithPowerResponse = await db.query(
+        'SELECT * FROM main.shop WHERE item_power > 0'
+    )
+    return getAllItemsWithPowerResponse
+}
+
 exports.getShopByCategory = async (itemCategory) => {
     let getShopByCategoryResponse = await db.query(
         'SELECT * FROM main.shop WHERE item_category = $1 AND purchasable = true ORDER BY cost DESC',
@@ -21,6 +29,22 @@ exports.getShopByItemName = async (itemName) => {
         [`${itemName}`]
     )
     return getShopByItemNameResponse
+}
+
+exports.getRareItemsByItemName = async (itemName) => {
+    let getRareItemsByItemNameResponse = await db.query(
+        'SELECT * FROM main.shop WHERE item_name = $1 AND purchasable = false',
+        [`${itemName}`]
+    )
+    return getRareItemsByItemNameResponse
+}
+
+exports.getAllItemsByItemName = async (itemName) => {
+    let getAllItemsByItemNameResponse = await db.query(
+        'SELECT * FROM main.shop WHERE item_name = $1',
+        [`${itemName}`]
+    )
+    return getAllItemsByItemNameResponse
 }
 
 exports.itemLimitCheck = async (itemName) => {

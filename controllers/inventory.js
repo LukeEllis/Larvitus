@@ -17,11 +17,11 @@ exports.itemCheck = async (target, itemName) => {
 }
 
 exports.getInventoryByCategory = async (target, itemCategory) => {
-    let itemCheckResponse = await db.query(
+    let getInventoryByCategoryResponse = await db.query(
         'SELECT * from main.inventory WHERE user_id = $1 AND item_category = $2',
         [`${target.id}`, `${itemCategory}`]
     )
-    return itemCheckResponse
+    return getInventoryByCategoryResponse
 }
 
 exports.createItemEntry = async (target, itemName, amount) => {

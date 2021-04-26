@@ -32,14 +32,18 @@ module.exports = {
                     return message.channel.send(`You may only carry ${limitCheck.rows[0].item_limit}x ${validItemName.rows[0].item_name} at a time.`);
                 }
             }else{
-                if ((amountOwned.rows[0].amount + amount) > limitCheck.rows[0].item_limit){
+                const parsedAmountOwned = parseInt(amountOwned.rows[0].amount);
+                const parsedAmount = parseInt(amount);
+                const parsedLimit = parseInt(limitCheck.rows[0].item_limit);
+                if ((parsedAmountOwned + parsedAmount) > parsedLimit){
                     return message.channel.send(`You may only carry ${limitCheck.rows[0].item_limit}x ${validItemName.rows[0].item_name} at a time. You can carry ${limitCheck.rows[0].item_limit - amountOwned.rows[0].amount} more ${validItemName.rows[0].item_name}.`);
                 }
             }
 
+            console.log(`amount`, amount)
             let moneyOwned = await currency.getCurrencyById(target);
-            console.log(`moneyOwned`, moneyOwned)
-            let cost = (amount*limitCheck.rows[0].cost);
+            console.log(`moneyOwned`, moneyOwned.rows[0].currency)
+            let cost = ((amount)*(limitCheck.rows[0].cost));
             console.log(`cost`, cost)
             if (moneyOwned.rows[0].currency < cost){
                 return message.channel.send(`You cannot afford ${amount}x ${validItemName.rows[0].item_name} right now.`);
