@@ -26,8 +26,8 @@ module.exports = {
 
             let fairyBottle = await inventory.itemCheck(target, 'fairy_bottle')
         
-            let roll = Math.floor(Math.random() * 101);
-            // let roll = 151;
+            // let roll = Math.floor(Math.random() * 101);
+            let roll = 149;
             console.log('roll', roll)
 
             let dragonslayerItems = await games.getInventoryOfItemsWithPower(target, 'dragonslayer');
@@ -347,7 +347,65 @@ module.exports = {
             
             }else if (roll <= 153){
 
-                //wizard appears to fill up your purchasable items to full, rewarding money for any items you cannot hold
+                message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Along the path up to the dragon's castle ${target.username} is approached by tall wizard in expensive robes. "Well hello there traveler! It's rare to see aventurers come up this path. You do know there is a dragon up ahead don't you? Well, either way, allow me to fill your bag with a few things that you may find useful. I've included a special potion I helped invent, but beware - you cannot handle my Strongest Potions!"`);
+
+                let reward = [
+                    'lock_pick',
+                    'potion_of_shielding',
+                    'fairy_bottle',
+                    'strongest_potion',
+                    'dynamite'
+                ]
+
+                for (i = reward.length; i > 0; i--){
+
+                    let itemName = reward[i-1];
+
+                    let itemCheck = await inventory.itemCheck(target, itemName);
+
+                    if (itemCheck.rows.length > 0){
+
+                        let itemLimitCheck = await shop.getShopByItemName(itemName);
+                        let itemLimit = itemLimitCheck.rows[0].item_limit;
+                        let itemCost = itemLimitCheck.rows[0].cost;
+                        let amountOwned = itemCheck.rows[0].amount;
+
+                        if ((amountOwned + itemLimit) > itemLimit){
+
+                            let itemAmountToAdd = itemLimit - amountOwned;
+                            let addItem = await inventory.addToInventory(target, itemName, itemAmountToAdd);
+                            let currencyAmountToAdd = (itemLimit - itemAmountToAdd) * itemCost;
+                            let addCurrency = await currency.addCurrency(currencyAmountToAdd, target);
+                            
+                            message.channel.send(`The wizard raises their wand and out pops ${itemAmountToAdd}x ${itemName} and $${currencyAmountToAdd} in front of ${target.username}!`);
+
+                        }else{
+
+                            let itemAmountToAdd = itemLimit;
+                            let addItem = await inventory.addToInventory(target, itemName, itemAmountToAdd);
+                            
+                            message.channel.send(`The wizard raises their wand and out pops ${itemAmountToAdd}x ${itemName} in front of ${target.username}!`); 
+                        
+                        }
+                    
+                    }
+                    
+                    if (itemCheck.rows.length < 1){
+
+                        let itemLimitCheck = await shop.itemLimitCheck(itemName);
+                        let itemLimit = itemLimitCheck.rows[0].item_limit;
+                        console.log(`Item name ${i}`, itemName)
+                        console.log(`Item limit ${i}`, itemLimit)
+
+                        let createItemEntry = await inventory.createItemEntry(target, itemName, itemLimit);
+
+                        message.channel.send(`The wizard raises their wand and out pops ${itemAmountToAdd}x ${itemName} in front of ${target.username}!`);
+                    
+                    }         
+                
+                }
+
+                return message.channel.send(`The wizard has filled ${target.username}'s inventory and wallet with goods and money needed to face the perils ahead. "I hope this has helped, ${target.username}." The wizard disappears as quickly as he arrived. I wonder how he knew ${target.username}'s name?`); 
 
             }else if (roll <= 154){
 
@@ -357,7 +415,7 @@ module.exports = {
                 let dragonTaleCheck = await inventory.itemCheck(target, reward);
                 if (dragonTaleCheck.rows.length < 1){
                     let createDragonTaleEntry = await inventory.createItemEntry(target, reward, 1);
-                    return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. ${target.username} approaches the dragon, ready to strike. But just before an epic battle could break out, the dragon puts on its glasses and pulls out a book. "Hold on adventurer, it's my reading time. Would you mind keeping me company while I read this tale of great adventure?" A while later, the dragon finally finishes reading the story. "Well, wasn't that nice? Not too long, not too short, this _Dragon Tale_ was just right." ${target.username} receis a Dragon Tale from the dragon.`);
+                    return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. ${target.username} approaches the dragon, ready to strike. But just before an epic battle could break out, the dragon puts on its glasses and pulls out a book. "Hold on adventurer, it's my reading time. Would you mind keeping me company while I read this tale of great adventure?" A while later, the dragon finally finishes reading the story. "Well, wasn't that nice? Not too long, not too short, this _Dragon Tale_ was just right." ${target.username} received a Dragon Tale from the dragon.`);
                 }
 
                 let addDragonTale = await inventory.addToInventory(target, reward, 1);

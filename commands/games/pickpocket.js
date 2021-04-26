@@ -167,7 +167,7 @@ module.exports = {
                         let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
                         const currencyAmount = reward - amount;
                         let addCurrency = await currency.addCurrency(currencyAmount, author);
-                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
                     }
                 }
 
@@ -192,7 +192,7 @@ module.exports = {
                         let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
                         const currencyAmount = reward - amount;
                         let addCurrency = await currency.addCurrency(currencyAmount, author);
-                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
                     }
                 }
 
