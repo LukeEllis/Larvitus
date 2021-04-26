@@ -11,6 +11,8 @@ module.exports = {
 	description: 'Go on an epic journey to slay the dragon.',
   	async execute(message) {
 
+        // cache
+
         const target = message.author;
 		
         console.log(`${target.username} is trying to slay the dragon.`)
@@ -21,19 +23,11 @@ module.exports = {
             if(doesUserExist.rows.length < 1){
                 return message.channel.send(`You need a wallet before you can collect epic treasures from the dragon. Get your wallet with the !init command.`)
             }
-            
-            // leaving potion of shielding here for idea on how to approach fairy in a bottle situation
 
-            // let potionOfShielding = await inventory.itemCheck(target, 'potion_of_shielding')
-            // if (potionOfShielding.rows.length > 0){
-            //     if (potionOfShielding.rows[0].amount > 0){
-            //         let usePotionOfShielding = await inventory.removeFromInventory(target, 'potion_of_shielding', 1);
-            //         return message.channel.send(`${target} had a Potion of Shielding to block your attack! They now have ${potionOfShielding.rows[0].amount - 1} Potions of Shielding left.`);
-            //     }
-            // }
+            let fairyBottle = await inventory.itemCheck(target, 'fairy_bottle')
         
             let roll = Math.floor(Math.random() * 101);
-            // let roll = 153;
+            // let roll = 151;
             console.log('roll', roll)
 
             let dragonslayerItems = await games.getInventoryOfItemsWithPower(target, 'dragonslayer');
@@ -47,8 +41,6 @@ module.exports = {
                 console.log(`roll + ${dragonslayerItems.rows[i-1].item_name}`, roll);
 
             }
-        
-            // add logic for strongest potion effects
 
             let StrongestPotion = await inventory.itemCheck(target, 'strongest_potion');
             if (StrongestPotion.rows.length > 0){
@@ -56,42 +48,80 @@ module.exports = {
                 if (StrongestPotion.rows[0].amount > 0){
                     let useStrongestPotions = await inventory.clearInventory(target, 'strongest_potion');
                     console.log(`Used Strongest Potion.`)
+
+                    let strongestPotionRoll = Math.floor(Math.random() * 101);
+                    console.log(`strongestPotionRoll`, strongestPotionRoll)
+                    if (strongestPotionRoll <= 25){
+
+                        if (fairyBottle.rows.length > 0){
+                            if (fairyBottle.rows[0].amount > 0){
+                                let usefairyBottle = await inventory.removeFromInventory(target, 'fairy_bottle', 1);
+                                return message.channel.send(`${target.username} sips a Strongest Potion before heading to face the dragon. After a few moments, ${target.username} starts to shrink smaller and smaller until they disappear.. but wait! A fairy escapes their bottle and protects ${target.username} from an untimely end to the Strongest Potion. They now have ${fairyBottle.rows[0].amount - 1} Fairy in a Bottle left.`);
+                            }
+                        }
+
+                        return message.channel.send(`${target.username} sips a Strongest Potion before heading to face the dragon. After a few moments, ${target.username} starts to shrink smaller and smaller until they disappear. Well, I guess they did always have an interest in _microbiology_!`);
+
+                    }else if (strongestPotionRoll <= 50){
+
+                        if (fairyBottle.rows.length > 0){
+                            if (fairyBottle.rows[0].amount > 0){
+                                let usefairyBottle = await inventory.removeFromInventory(target, 'fairy_bottle', 1);
+                                return message.channel.send(`${target.username} sips a Strongest Potion before heading to face the dragon. One quick swig later, ${target.username} explodes into a million little pieces.. but wait! A fairy escapes their bottle and protects ${target.username} from an untimely end to the Strongest Potion. They now have ${fairyBottle.rows[0].amount - 1} Fairy in a Bottle left.`);
+                            }
+                        }
+
+                        return message.channel.send(`${target.username} sips a Strongest Potion before heading to face the dragon. One quick swig later, ${target.username} explodes into a million little pieces.`);
+
+                    }
                 }
 
             }
-            
-
-// strongest potion side affects
-// cache
-// rewards up to 155
-// fairy bottle
 
             if (roll <= 25){
+
+                if (fairyBottle.rows.length > 0){
+                    if (fairyBottle.rows[0].amount > 0){
+                        let usefairyBottle = await inventory.removeFromInventory(target, 'fairy_bottle', 1);
+                        return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. One poorly timed swing later, ${target.username} is burned to a crisp.. but wait! A fairy escapes their bottle and protects ${target.username} from an untimely end to the dragon. They now have ${fairyBottle.rows[0].amount - 1} Fairy in a Bottle left.`);
+                    }
+                }
 
                 const reward = 50;
 
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
+                    console.log(`reward -`, checkTargetCurrency.rows[0].currency)
                     let loseCurrency = await currency.removeCurrency(checkTargetCurrency.rows[0].currency, target)
                     let addToHoard = await games.addToDragonslayerHoard(reward)
                     return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. One poorly timed swing later, ${target.username} is burned to a crisp. Looks like this is.. Game Over! ${target.username} has lost $${checkTargetCurrency.rows[0].currency} Pokédollars.`);
                 }
 
+                console.log(`reward -`, reward)
                 let loseCurrency = await currency.removeCurrency(reward, target)
                 let addToHoard = await games.addToDragonslayerHoard(reward)
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. One poorly timed swing later, ${target.username} is burned to a crisp. Looks like this is.. Game Over! ${target.username} has lost $${reward} Pokédollars.`);
             
             }else if (roll <= 50){
 
+                if (fairyBottle.rows.length > 0){
+                    if (fairyBottle.rows[0].amount > 0){
+                        let usefairyBottle = await inventory.removeFromInventory(target, 'fairy_bottle', 1);
+                        return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. ${target.username} takes two steps forward, and is immediately swallowed whole. That's got to hurt.. but wait! A fairy escapes their bottle and protects ${target.username} from an untimely end to the dragon. They now have ${fairyBottle.rows[0].amount - 1} Fairy in a Bottle left.`);
+                    }
+                }
+
                 const reward = 25;
 
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
+                    console.log(`reward -`, checkTargetCurrency.rows[0].currency)
                     let loseCurrency = await currency.removeCurrency(checkTargetCurrency.rows[0].currency, target)
                     let addToHoard = await games.addToDragonslayerHoard(reward)
                     return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. ${target.username} takes two steps forward, and is immediately swallowed whole. That's got to hurt. ${target.username} has lost $${checkTargetCurrency.rows[0].currency} Pokédollars.`);
                 }
 
+                console.log(`reward -`, reward)
                 let loseCurrency = await currency.removeCurrency(reward, target)
                 let addToHoard = await games.addToDragonslayerHoard(reward)
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. ${target.username} takes two steps forward, and is immediately swallowed whole. That's got to hurt. ${target.username} has lost $${reward} Pokédollars.`);
@@ -102,22 +132,26 @@ module.exports = {
 
                 let checkTargetCurrency = await currency.getCurrencyById(target)
                 if (checkTargetCurrency.rows[0].currency < reward){
+                    console.log(`reward -`, checkTargetCurrency.rows[0].currency)
                     let loseCurrency = await currency.removeCurrency(checkTargetCurrency.rows[0].currency, target)
                     let addToHoard = await games.addToDragonslayerHoard(reward)
                     return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Halfway up to the dragon's castle ${target.username} realizes they lost their wallet. Uh oh! ${target.username} has lost $${checkTargetCurrency.rows[0].currency} Pokédollars.`);
                 }
 
+                console.log(`reward -`, reward)
                 let loseCurrency = await currency.removeCurrency(reward, target)
                 let addToHoard = await games.addToDragonslayerHoard(reward)
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Halfway up to the dragon's castle ${target.username} realizes they lost their wallet. Uh oh! ${target.username} has lost $${reward} Pokédollars.`);
             
             }else if (roll <= 90){
 
+                console.log(`reward`, 0)
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Just kidding. After taking one look at the beast ahead, ${target.username} packs up and runs off. Should have put more points in Courage!`);
             
             }else if (roll <= 100){
 
                 const reward = 5;
+                console.log(`reward`, reward)
 
                 let gainCurrency = await currency.addCurrency(reward, target)
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. ${target.username} hears a roar in the distance, and runs home with the small amount of gold they found nearby. ${target.username} gains $${reward} Pokédollars.`);
@@ -129,17 +163,19 @@ module.exports = {
                 let checkHoard = await games.getDragonslayer();
                 if (checkHoard.rows[0].hoard < reward){
                     const remainingHoard = checkHoard.rows[0].hoard;
+                    console.log(`reward`, remainingHoard)
                     let removeFromHoard = await games.removeFromDragonslayerHoard(remainingHoard)
                     let gainCurrency = await currency.addCurrency(remainingHoard, target)
                     return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Lucky for ${target.username}, the dragon doesn't feel like fighting. It flicks a bag of gold to ${target.username} and sends them on their way! ${target.username} gains $${remainingHoard} Pokédollars.`);    
                 }
 
+                console.log(`reward`, reward)
                 let removeFromHoard = await games.removeFromDragonslayerHoard(reward)
                 let gainCurrency = await currency.addCurrency(reward, target)
 
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Lucky for ${target.username}, the dragon doesn't feel like fighting. It flicks a bag of gold to ${target.username} and sends them on their way! ${target.username} gains $${reward} Pokédollars.`);
                 
-            }else if (roll < 150){
+            }else if (roll < 148){
 
                 const reward = 100;
 
@@ -165,17 +201,19 @@ module.exports = {
                 
                 }else if(checkHoard.rows[0].hoard < reward){
                     const remainingHoard = checkHoard.rows[0].hoard;
+                    console.log(`reward`, remainingHoard)
                     let removeFromHoard = await games.removeFromDragonslayerHoard(remainingHoard)
                     let gainCurrency = await currency.addCurrency(remainingHoard, target)
                     return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Noticing the dragon is asleep, ${target.username} sneaks behind the dragon and takes part of their hoard. Nice one! ${target.username} gains $${remainingHoard} Pokédollars.`);
                 }
 
+                console.log(`reward`, reward)
                 let removeFromHoard = await games.removeFromDragonslayerHoard(reward)
                 let gainCurrency = await currency.addCurrency(reward, target)
                 
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Noticing the dragon is asleep, ${target.username} sneaks behind the dragon and takes part of their hoard. Nice one! ${target.username} gains $${reward} Pokédollars.`);
             
-            }else if (roll <= 150){
+            }else if (roll <= 148){
 
                 let checkHoard = await games.getDragonslayer();
 
@@ -204,6 +242,7 @@ module.exports = {
                 }
 
                 const reward = checkHoard.rows[0].hoard;
+                console.log(`reward`, reward)
                 let gainCurrency = await currency.addCurrency(reward, target)
 
                 const amount = 1000;
@@ -211,10 +250,7 @@ module.exports = {
 
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. After many close calls, ${target.username} drives their blade right into the dragon's skull! The dragon hoard is theirs! ${target.username} gains $${reward} Pokédollars.`);
 
-                /*
-                    pseudo code for when someone loses money, the money goes to the hoard
-                    let addToHoard = await games.addToDragonslayerHoard(amount)
-                */
+            }else if (roll <= 149){
 
                 //pseudo code for when somebody gets the cache
 
@@ -238,29 +274,25 @@ module.exports = {
 
                 */
 
-                
-                
+            }else if (roll <= 150){
 
+                let armorCheck = await inventory.itemCheck(target, 'armor');
+                if (armorCheck.rows.length > 0){
+                    if (armorCheck.rows[0].amount > 0){
+                        const reward = 750;
+                        let addCurrency = await currency.addCurrency(reward, target);
+                        return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Halfway up to the dragon's castle ${target.username} spots a huge bag of gold. They're rich!\n${target.username} found ${reward} Pokédollars!`);
+                    }
+                }
 
+                if (armorCheck.rows.length < 1){
+                    let createArmorEntry = await inventory.createItemEntry(target, 'armor', 1);
+                    return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Halfway up to the dragon's castle ${target.username}, spots a shiny suit of armor on the ground. This should totally help when fighting the dragon. Score!`);
+                }
 
+                let addArmor = await inventory.addToInventory(target, 'gloves', 1);
+                return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Halfway up to the dragon's castle ${target.username}, spots a shiny suit of armor on the ground. This should totally help when fighting the dragon. Score!`);
 
-                // let authorGlovesCount = await inventory.itemCheck(author, 'gloves');
-                // if (authorGlovesCount.rows.length > 0){
-                //     if (authorGlovesCount.rows[0].amount > 0){
-                //         const reward = 2500;
-                //         let addCurrency = await currency.addCurrency(reward, author);
-                //         return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${reward} Pokédollars! Wow!`);
-                //     }
-                // }
-
-                // if (authorGlovesCount.rows.length < 1){
-                //     let createItemPickEntry = await inventory.createItemEntry(author, 'gloves', 1);
-                //     return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pair of Gloves. Woah, these are really rare!`);
-                // }
-
-                // let addGlovesToAuthor = await inventory.addToInventory(author, 'gloves', 1);
-                // return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pair of Gloves. Woah, these are really rare!`);
-            
             }else if (roll <= 151){
 
                 let checkHoard = await games.getDragonslayer();
@@ -292,21 +324,58 @@ module.exports = {
 
                 return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Heavy wounds stagger both ${target.username} and the dragon. The two parley and come to an agreement. The dragon gives ${target.username} half their hoard! ${target.username} gains $${reward} Pokédollars.`);
             
-            }else if (roll <= 155){
+            }else if (roll <= 152){
 
-                let badgeCount = await badges.checkBadge(target, 'dragon_slayer_badge');
-                // console.log(`badgeCount`, badgeCount)
-                console.log(`badgeCount.rows.length`, badgeCount.rows.length)
-                if (badgeCount.rows.length > 0){
-                    const thing = 5000;
-                    console.log(`thing`, thing)
-                    let addCurrency = await currency.addCurrency(thing, target);
-                    // console.log(`addCurrency`, addCurrency)
-                    return message.channel.send(`${target.username} has once again proven their place in history as the ultimate Dragon Slayer.\n${target.username} earns $${thing} Pokédollars! Congratulations!`);
+
+                // get item from cache
+
+                // let reward = await games.getRandomDragonslayerItem();
+                // console.log(`reward`, reward)
+                // let rareItemCheck = await inventory.itemCheck(target, reward);
+
+                // if (rareItemCheck.rows.length < 1){
+
+                //     let createDragonslayerItemEntry = await inventory.createItemEntry(target, reward, 1);
+                    
+                //     return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Heavy wounds stagger both ${target.username} and the dragon. The two parley and come to an agreement. The dragon gives ${target.username} a rare item! ${target.username} adds a ${reward} to their inventory.`);
+                
+                // }
+
+                // let gainItem = await inventory.addToInventory(target, reward, 1);
+                
+                // return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Heavy wounds stagger both ${target.username} and the dragon. The two parley and come to an agreement. The dragon gives ${target.username} a rare item! ${target.username} adds a ${reward} to their inventory.`);
+            
+            }else if (roll <= 153){
+
+                //wizard appears to fill up your purchasable items to full, rewarding money for any items you cannot hold
+
+            }else if (roll <= 154){
+
+                const reward = 'dragon_tale';
+                console.log(`reward`, reward)
+
+                let dragonTaleCheck = await inventory.itemCheck(target, reward);
+                if (dragonTaleCheck.rows.length < 1){
+                    let createDragonTaleEntry = await inventory.createItemEntry(target, reward, 1);
+                    return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. ${target.username} approaches the dragon, ready to strike. But just before an epic battle could break out, the dragon puts on its glasses and pulls out a book. "Hold on adventurer, it's my reading time. Would you mind keeping me company while I read this tale of great adventure?" A while later, the dragon finally finishes reading the story. "Well, wasn't that nice? Not too long, not too short, this _Dragon Tale_ was just right." ${target.username} receis a Dragon Tale from the dragon.`);
                 }
 
-                let addBadgeToTarget = await badges.addBadges(target, 'dragon_slayer_badge');
-                // console.log(`addBadgeToTarget`, addBadgeToTarget)
+                let addDragonTale = await inventory.addToInventory(target, reward, 1);
+                return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. ${target.username} approaches the dragon, ready to strike. But just before an epic battle could break out, the dragon puts on its glasses and pulls out a book. "Hold on adventurer, it's my reading time. Would you mind keeping me company while I read this tale of great adventure?" A while later, the dragon finally finishes reading the story. "Well, wasn't that nice? Not too long, not too short, this _Dragon Tale_ was just right." ${target.username} received a Dragon Tale from the dragon.`);
+
+            }else if (roll <= 155){
+
+                const reward = 'dragon_slayer_badge';
+                console.log(`reward`, reward)
+
+                let badgeCount = await badges.checkBadge(target, reward);
+                if (badgeCount.rows.length > 0){
+                    const reward = 5000;
+                    let addCurrency = await currency.addCurrency(reward, target);
+                    return message.channel.send(`${target.username} has once again proven their place in history as the ultimate Dragon Slayer.\n${target.username} earns $${reward} Pokédollars! Congratulations!`);
+                }
+
+                let addBadgeToTarget = await badges.addBadges(target, reward);
                 return message.channel.send(`After slaying countless dragons, ${target.username} has earned their place in history.\n${target.username} has earned the Dragon Slayer Badge. Congratulations!`);
 
             }

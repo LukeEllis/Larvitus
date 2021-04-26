@@ -7,7 +7,7 @@ Total time spent making bot:
 - as of 4/22/2021 - 10 hours
 - 4/23/2021 - 19 hours
 - 4/24/2021 - 26 hours
-- 4/25/2021 - 35 hours (6:30 pm)
+- 4/25/2021 - 39 hours (11 pm)
 
 TODO
 - [x] create inventory 
@@ -32,7 +32,6 @@ TODO
 - [] calculate currency gain rate of games
 - [] calculate chances of game outcomes
 - [] make display dates WAY prettier
-- [] dragonslayer "dragon_tale" where it tells you a story and gives you a tale, which can be used as a quest item later
 
 CANVAS TODO
 - [] update badges to show badge case using Canvas
