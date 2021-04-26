@@ -6,8 +6,9 @@ LOOK AT GAMEBOI CODE TO UNDERSTAND CANVAS GENERATION
 Total time spent making bot:
 - as of 4/22/2021 - 10 hours
 - 4/23/2021 - 19 hours
-- 4/24/2021 - 25 hours (7:30 pm)
-- 4/25/2021 - 24 hours
+- 4/24/2021 - 26 hours
+- 4/25/2021 - 38.5 hours
+- 4/26/2021 - 41 hours (5:30 pm)
 
 TODO
 - [x] create inventory 
@@ -24,7 +25,7 @@ TODO
 - [x] add logic to make sure badges being added are valid (badgeVerify function?)
 - [x] create item buy/sell commands (!buy/!sell)
 - [x] shop display command (!shop)
-- [] dragonslayer game
+- [x] dragonslayer game
 - [] mine game
 - [x] pickpocket game
 - [x] add PvP flag for users with 24 hr cooldown
@@ -47,3 +48,5 @@ LONG TODO
 - [] add varied cooldowns for Discord/Twitch to incentivize using them on livestreams
 - [] update inventory to be viewable in Twitch
 - [] deploy to AWS
+- [] crafting
+- [] quests

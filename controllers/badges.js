@@ -18,7 +18,7 @@ exports.checkBadge = async (target, badgeName) => {
 
 exports.addBadges = async (target, badgeName) => {
     let getBadgeCategories = await db.query(
-        'SELECT badge_category FROM main.badge_case WHERE item_name = $1',
+        'SELECT badge_category FROM main.badge_case WHERE badge_name = $1',
         [`${badgeName}`]
     )
     let addBadgesResponse = await db.query(

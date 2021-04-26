@@ -167,7 +167,7 @@ module.exports = {
                         let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
                         const currencyAmount = reward - amount;
                         let addCurrency = await currency.addCurrency(currencyAmount, author);
-                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
                     }
                 }
 
@@ -192,7 +192,7 @@ module.exports = {
                         let lockPickPack = await inventory.addToInventory(author, 'lock_pick', amount);
                         const currencyAmount = reward - amount;
                         let addCurrency = await currency.addCurrency(currencyAmount, author);
-                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks ${currencyAmount} Pokédollars!`);
+                        return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found ${amount} Lock Picks and ${currencyAmount} Pokédollars!`);
                     }
                 }
 
@@ -343,7 +343,7 @@ module.exports = {
                 let addGlovesToAuthor = await inventory.addToInventory(author, 'gloves', 1);
                 return message.channel.send(`${author.username} tried to pickpocket ${target.username}, but got distracted by something on the ground.\n${author.username} found a pair of Gloves. Woah, these are really rare!`);
             
-            }else if (roll >= 151){
+            }else if (roll <= 155){
 
                 let authorBadgeCount = await badges.checkBadge(author, 'master_thief_badge');
                 if (authorBadgeCount.rows.length > 0){

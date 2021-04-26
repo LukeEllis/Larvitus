@@ -16,6 +16,14 @@ exports.itemCheck = async (target, itemName) => {
     return itemCheckResponse
 }
 
+exports.getInventoryByCategory = async (target, itemCategory) => {
+    let getInventoryByCategoryResponse = await db.query(
+        'SELECT * from main.inventory WHERE user_id = $1 AND item_category = $2',
+        [`${target.id}`, `${itemCategory}`]
+    )
+    return getInventoryByCategoryResponse
+}
+
 exports.createItemEntry = async (target, itemName, amount) => {
     let getItemCategories = await db.query(
         'SELECT item_category FROM main.shop WHERE item_name = $1',
