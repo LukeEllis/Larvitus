@@ -11,8 +11,6 @@ module.exports = {
 	description: 'Go on an epic journey to slay the dragon.',
   	async execute(message) {
 
-        // cache
-
         const target = message.author;
 		
         console.log(`${target.username} is trying to slay the dragon.`)
@@ -26,8 +24,8 @@ module.exports = {
 
             let fairyBottle = await inventory.itemCheck(target, 'fairy_bottle')
         
-            // let roll = Math.floor(Math.random() * 101);
-            let roll = 149;
+            let roll = Math.floor(Math.random() * 101);
+            // let roll = 148;
             console.log('roll', roll)
 
             let dragonslayerItems = await games.getInventoryOfItemsWithPower(target, 'dragonslayer');
@@ -217,7 +215,6 @@ module.exports = {
 
                 let checkHoard = await games.getDragonslayer();
 
-                //eventually add cache if hoard is empty
                 if(checkHoard.rows[0].hoard === 0){
 
                     let reward = await games.getRandomDragonslayerItem();
@@ -252,28 +249,64 @@ module.exports = {
 
             }else if (roll <= 149){
 
-                //pseudo code for when somebody gets the cache
+                message.channel.send(`${target.username} arms themselves before bravely facing the dragon. The battle drags on, but finally ${target.username} wears the dragon down enough for it to fly away! The dragon cache is theirs!`);
 
-                /* 1) Check items in the cache
-                    let checkCache = await games.getDragonslayer();
+                let checkCache = await games.getDragonslayer();
+
+                const rewardOne = checkCache.rows[0].cache_item_1;
+                const rewardTwo = checkCache.rows[0].cache_item_2;
+                const rewardThree = checkCache.rows[0].cache_item_3;
+
+                const rewardOneAmount = checkCache.rows[0].cache_item_1_amount;
+                const rewardTwoAmount = checkCache.rows[0].cache_item_2_amount;
+                const rewardThreeAmount = checkCache.rows[0].cache_item_3_amount;
+
+                let rewardOneCheck = await inventory.itemCheck(target, rewardOne);
+                
+                if (rewardOneCheck.rows.length < 1){
                     
-                    const reward = checkCache.rows[0].cache; ?
-
-
-                    2) Give cache to player
-                     let gainInventory = await intentory.addtoinventory(reward, target) 
-
+                    let createRewardOneEntry = await inventory.createItemEntry(target, rewardOne, rewardOneAmount);
+                    message.channel.send(`${target.username} reaches their hand into the cache and pulls out ${rewardOneAmount}x ${rewardOne}! Nice!`);
+                
+                }else{
                     
-                    3) generate new cache (random items?)
-
-                    make function to pull in random items from database and put it into the new cache
-
-                    let roll = Math.random();
+                    let gainItemOne = await inventory.addToInventory(target, rewardOne, rewardOneAmount);
+                    message.channel.send(`${target.username} reaches their hand into the cache and pulls out ${rewardOneAmount}x ${rewardOne}! Nice!`);
+                
+                }
+                
+                let rewardTwoCheck = await inventory.itemCheck(target, rewardTwo);
+                
+                if (rewardTwoCheck.rows.length < 1){
                     
+                    let createRewardTwoEntry = await inventory.createItemEntry(target, rewardTwo, rewardTwoAmount);
+                    message.channel.send(`${target.username} reaches their hand into the cache and pulls out ${rewardTwoAmount}x ${rewardTwo}! Nice!`);
+                
+                }else{
+                    
+                    let gainItemTwo = await inventory.addToInventory(target, rewardTwo, rewardTwoAmount);
+                    message.channel.send(`${target.username} reaches their hand into the cache and pulls out ${rewardTwoAmount}x ${rewardTwo}! Nice!`);
+                
+                }
 
+                let rewardThreeCheck = await inventory.itemCheck(target, rewardThree);
+                
+                if (rewardThreeCheck.rows.length < 1){
 
-                */
+                    let createRewardThreeEntry = await inventory.createItemEntry(target, rewardThree, rewardThreeAmount);
+                    message.channel.send(`${target.username} reaches their hand into the cache and pulls out ${rewardThreeAmount}x ${rewardThree}! Nice!`);
+                
+                }else{
 
+                    let gainItemThree = await inventory.addToInventory(target, rewardThree, rewardThreeAmount);
+                    message.channel.send(`${target.username} reaches their hand into the cache and pulls out ${rewardThreeAmount}x ${rewardThree}! Nice!`);
+                
+                }
+
+                let newCache = await games.createDragonslayerCache();
+
+                return message.channel.send(`The rare items obtained from the cache have filled ${target.username}'s backpack. Who will be the next hero to earn the dragon's cache?`)
+                
             }else if (roll <= 150){
 
                 let armorCheck = await inventory.itemCheck(target, 'armor');
@@ -326,28 +359,25 @@ module.exports = {
             
             }else if (roll <= 152){
 
+                let reward = await games.getRandomDragonslayerItem();
+                console.log(`reward`, reward)
+                let rareItemCheck = await inventory.itemCheck(target, reward);
 
-                // get item from cache
+                if (rareItemCheck.rows.length < 1){
 
-                // let reward = await games.getRandomDragonslayerItem();
-                // console.log(`reward`, reward)
-                // let rareItemCheck = await inventory.itemCheck(target, reward);
-
-                // if (rareItemCheck.rows.length < 1){
-
-                //     let createDragonslayerItemEntry = await inventory.createItemEntry(target, reward, 1);
+                    let createDragonslayerItemEntry = await inventory.createItemEntry(target, reward, 1);
                     
-                //     return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Heavy wounds stagger both ${target.username} and the dragon. The two parley and come to an agreement. The dragon gives ${target.username} a rare item! ${target.username} adds a ${reward} to their inventory.`);
+                    return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Heavy wounds stagger both ${target.username} and the dragon. The two parley and come to an agreement. The dragon gives ${target.username} a rare item! ${target.username} adds a ${reward} to their inventory.`);
                 
-                // }
+                }
 
-                // let gainItem = await inventory.addToInventory(target, reward, 1);
+                let gainItem = await inventory.addToInventory(target, reward, 1);
                 
-                // return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Heavy wounds stagger both ${target.username} and the dragon. The two parley and come to an agreement. The dragon gives ${target.username} a rare item! ${target.username} adds a ${reward} to their inventory.`);
+                return message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Heavy wounds stagger both ${target.username} and the dragon. The two parley and come to an agreement. The dragon gives ${target.username} a rare item! ${target.username} adds a ${reward} to their inventory.`);
             
             }else if (roll <= 153){
 
-                message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Along the path up to the dragon's castle ${target.username} is approached by tall wizard in expensive robes. "Well hello there traveler! It's rare to see aventurers come up this path. You do know there is a dragon up ahead don't you? Well, either way, allow me to fill your bag with a few things that you may find useful. I've included a special potion I helped invent, but beware - you cannot handle my Strongest Potions!"`);
+                message.channel.send(`${target.username} arms themselves before bravely facing the dragon. Along the path up to the dragon's castle ${target.username} is approached by a tall wizard in expensive robes. "Well hello there traveler! It's rare to see aventurers come up this path. You do know there is a dragon up ahead don't you? Well, either way, allow me to fill your bag with a few things that you may find useful. I've included a special potion I helped invent, but beware - you cannot handle my Strongest Potions!"`);
 
                 let reward = [
                     'lock_pick',

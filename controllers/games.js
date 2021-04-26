@@ -31,6 +31,28 @@ exports.removeFromDragonslayerHoard = async (amount) => {
     return removeFromDragonslayerHoardResponse
 }
 
+exports.createDragonslayerCache = async () => {
+
+    const cacheRollOne = Math.ceil(Math.random() * 3);
+    const cacheRollTwo = Math.ceil(Math.random() * 3);
+    const cacheRollThree = Math.ceil(Math.random() * 3);
+
+    let createDragonslayerCacheResponse = await db.query(
+        'UPDATE games.dragonslayer SET cache_item_1_amount = $1, cache_item_2_amount = $2, cache_item_3_amount = $3 RETURNING *',
+        [`${cacheRollOne}`, `${cacheRollTwo}`, `${cacheRollThree}`]
+    )
+
+    return createDragonslayerCacheResponse
+
+}
+
+exports.emptyDragonslayerCache = async () => {
+    let emptyDragonslayerCacheResponse = await db.query(
+        'UPDATE games.dragonslayer SET cache_item_1_amount = 0, cache_item_2_amount = 0, cache_item_3_amount = 0 RETURNING *'
+    )
+    return emptyDragonslayerCacheResponse
+}
+
 exports.getRandomDragonslayerItem = async () => {
 
     let getRareDragonslayerItems = await db.query(
