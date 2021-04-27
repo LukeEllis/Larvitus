@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const Canvas = require('canvas');
 const badges = require("../../controllers/badges");
 const errors = require("../../controllers/error");
 
@@ -7,6 +8,7 @@ module.exports = {
 	description: 'Shows badges for a given user.',
     usage: '<user>',
 	async execute(message, args) {
+
         const target = message.mentions.users.first() || message.author;
 
 		try{
@@ -20,19 +22,74 @@ module.exports = {
 		}
 
 		try{
+
 			let getBadges = await badges.getBadgesById(target);
+			const badgesOwned = getBadges.rows;
+
+			let badgeCheckShinyGymOne = badgesOwned.some(badgeName => badgeName.badge_name === 'blazing_blaziken_badge');
+			let badgeCheckShinyGymTwo = badgesOwned.some(badgeName => badgeName.badge_name === 'tyrannus_badge');
+			let badgeCheckShowdownGymOne = badgesOwned.some(badgeName => badgeName.badge_name === 'rockin_out_badge');
+			let badgeCheckGamesOne = badgesOwned.some(badgeName => badgeName.badge_name === 'dragon_slayer_badge');
+			let badgeCheckGamesTwo = badgesOwned.some(badgeName => badgeName.badge_name === 'miner_badge');
+			let badgeCheckGamesThree = badgesOwned.some(badgeName => badgeName.badge_name === 'master_thief_badge');
+			let badgeCheckArtOne = badgesOwned.some(badgeName => badgeName.badge_name === 'art_1_badge');
+			let badgeCheckBakingOne = badgesOwned.some(badgeName => badgeName.badge_name === 'baking_1_badge');
+
+
+			const canvas = Canvas.createCanvas(560, 340);
+			const ctx = canvas.getContext('2d');
+			const background = await Canvas.loadImage('https://cdn.discordapp.com/attachments/621553509606752258/836541858417999872/boxes.png');
+			ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+			if(badgeCheckShinyGymOne){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
+				ctx.drawImage(avatar, 8, 10, 120, 120);
+			}
+
+			if(badgeCheckShinyGymTwo){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
+				ctx.drawImage(avatar, 112, 10, 120, 120);
+			}
+
+			if(badgeCheckShowdownGymOne){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
+				ctx.drawImage(avatar, 218, 10, 120, 120);
+			}
+
+			if(badgeCheckGamesOne){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
+				ctx.drawImage(avatar, 324, 10, 120, 120);
+			}
+
+			if(badgeCheckGamesTwo){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
+				ctx.drawImage(avatar, 430, 10, 120, 120);
+			}
+
+			if(badgeCheckGamesThree){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
+				ctx.drawImage(avatar, 4, 116, 120, 120);
+			}
+
+			if(badgeCheckArtOne){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
+				ctx.drawImage(avatar, 112, 116, 120, 120);
+			}
+
+			if(badgeCheckBakingOne){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
+				ctx.drawImage(avatar, 218, 116, 120, 120);
+			}
+
+			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${target.username}-badge-case.png`);
+
 			let badgesEmbed = new Discord.MessageEmbed()
 				.setColor('#0099ff')
-				.setTitle(`Badges`)
-				.setDescription(`<@${target.id}>`);
-			for (i = getBadges.rows.length; i > 0; i--){
-				let getBadgeInformation = await badges.getBadgeByBadgeName(getBadges.rows[0].badge_name)
-				badgesEmbed.addFields(
-						{
-							name : `${getBadgeInformation.rows[i-1].category_display_name} Badge:`, value: `${getBadgeInformation.rows[i-1].badge_display_name}\nEarned on ${getBadges.rows[i-1].earned_date}`, inline: false
-						}
-				)
-			}
+				.setTitle(`Badge Case`)
+				.setDescription(`<@${target.id}>'s Badges`)
+				.attachFiles(attachment)
+				.setImage(`attachment://${target.username}-badge-case.png`);
+
 			return message.channel.send({ embed: badgesEmbed });
 
 		}catch (err){

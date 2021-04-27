@@ -8,7 +8,8 @@ Total time spent making bot:
 - 4/23/2021 - 19 hours
 - 4/24/2021 - 26 hours
 - 4/25/2021 - 38.5 hours
-- 4/26/2021 - 41 hours (5:30 pm)
+- 4/26/2021 - 41 hours
+- 4/27/2021 - 43 hours (7:00 am)
 
 TODO
 - [x] create inventory 
@@ -35,10 +36,10 @@ TODO
 - [] make display dates WAY prettier
 
 CANVAS TODO
-- [] update badges to show badge case using Canvas
+- [x] update badges to show badge case using Canvas
 - [] update inventory to show backpack using Canvas
 - [] update currency to show wallet using Canvas
-- [] update ledger to return an embed/or scroll image with Canvas
+- [] update shop to return an embed/or image with Canvas
 - [] add canvas images for games in Discord
 
 LONG TODO
