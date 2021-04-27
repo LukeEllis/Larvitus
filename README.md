@@ -38,9 +38,11 @@ TODO
 CANVAS TODO
 - [x] update badges to show badge case using Canvas
 - [] update inventory to show backpack using Canvas
-- [] update currency to show wallet using Canvas
+- [x] update currency to show wallet using Canvas edit: decided to use canvas for empty wallets as a joke, but use text for general balance queries
 - [] update shop to return an embed/or image with Canvas
-- [] add canvas images for games in Discord
+- [] add canvas images for pickpocket game
+- [] add canvas images for dragonslayer game
+- [] add canvas images for mine game
 
 LONG TODO
 - [] integrate with Twitch
