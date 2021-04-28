@@ -9,7 +9,8 @@ Total time spent making bot:
 - 4/24/2021 - 26 hours
 - 4/25/2021 - 38.5 hours
 - 4/26/2021 - 41 hours
-- 4/27/2021 - 43 hours (7:00 am)
+- 4/27/2021 - 44 hours
+- 4/28/2021 - 46 hours (5:00 pm)
 
 TODO
 - [x] create inventory 
@@ -34,12 +35,13 @@ TODO
 - [] calculate currency gain rate of games
 - [] calculate chances of game outcomes
 - [] make display dates WAY prettier
+- [] bug with little_t's badge case
 
 CANVAS TODO
 - [x] update badges to show badge case using Canvas
 - [] update inventory to show backpack using Canvas
 - [x] update currency to show wallet using Canvas edit: decided to use canvas for empty wallets as a joke, but use text for general balance queries
-- [] update shop to return an embed/or image with Canvas
+- [x] update shop to return an embed/or image with Canvas
 - [] add canvas images for pickpocket game
 - [] add canvas images for dragonslayer game
 - [] add canvas images for mine game

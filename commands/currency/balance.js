@@ -24,16 +24,13 @@ module.exports = {
 
 			if (balance.rows[0].currency === 0){
 
-				const background = await Canvas.loadImage('https://i.imgur.com/qZjDcq3.jpg');
-				ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-				const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${target.username}-empty-balance.png`);
+				const attachment = 'https://media0.giphy.com/media/yIxNOXEMpqkqA/giphy.gif';
 
 				let balanceEmbed = new Discord.MessageEmbed()
 				.setColor('#0099ff')
 				.setTitle(`Wallet`)
 				.setDescription(`<@${target.id}>'s Balance`)
-				.attachFiles(attachment)
-				.setImage(`attachment://${target.username}-empty-balance.png`);
+				.setImage(attachment);
 
 				return message.channel.send({ embed: balanceEmbed });
 			

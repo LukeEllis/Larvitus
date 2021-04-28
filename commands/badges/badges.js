@@ -14,7 +14,7 @@ module.exports = {
 		try{
 			let checkUserBadgesExistence = await badges.getBadgesById(target);
 			if(checkUserBadgesExistence.rows.length < 1){
-				message.channel.send(`User ${target.username} does not yet have any badges.`)
+				return message.channel.send(`User ${target.username} does not yet have any badges.`)
 			}
 		}catch (err){
 			console.error(err.message)
@@ -35,7 +35,6 @@ module.exports = {
 			let badgeCheckArtOne = badgesOwned.some(badgeName => badgeName.badge_name === 'art_1_badge');
 			let badgeCheckBakingOne = badgesOwned.some(badgeName => badgeName.badge_name === 'baking_1_badge');
 
-
 			const canvas = Canvas.createCanvas(560, 340);
 			const ctx = canvas.getContext('2d');
 			const background = await Canvas.loadImage('https://cdn.discordapp.com/attachments/621553509606752258/836541858417999872/boxes.png');
@@ -52,23 +51,23 @@ module.exports = {
 			}
 
 			if(badgeCheckShowdownGymOne){
-				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
-				ctx.drawImage(avatar, 218, 10, 120, 120);
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836614563067461732/Rockin_Out_Badge.png');
+				ctx.drawImage(avatar, 228, 10, 106, 106);
 			}
 
 			if(badgeCheckGamesOne){
-				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
-				ctx.drawImage(avatar, 324, 10, 120, 120);
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+				ctx.drawImage(avatar, 342, 20, 90, 90);
 			}
 
 			if(badgeCheckGamesTwo){
-				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
-				ctx.drawImage(avatar, 430, 10, 120, 120);
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836662410693705808/Miner_Badge.png');
+				ctx.drawImage(avatar, 442, 14, 100, 100);
 			}
 
 			if(badgeCheckGamesThree){
-				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
-				ctx.drawImage(avatar, 4, 116, 120, 120);
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836682341912805456/Master_Thief_Badge.png');
+				ctx.drawImage(avatar, 18, 122, 98, 98);
 			}
 
 			if(badgeCheckArtOne){
