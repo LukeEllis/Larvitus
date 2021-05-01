@@ -46,26 +46,26 @@ module.exports = {
 
                 if (category === 'dragonslayer'){
 
-                    const fairyBottle       = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
-                    const strongestPotion   = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
+                    const fairyBottle       = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/837967891910754314/Fairy_Bottle_V2.png');
+                    const strongestPotion   = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/838027698441551872/Strongest_Potion_v2.png');
                     const armor             = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
                     const sword             = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
                     const gemEncrustedSword = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
-                    ctx.drawImage(fairyBottle, 52, 10, 110, 110);
-                    ctx.drawImage(strongestPotion, 152, 10, 110, 110);
+                    ctx.drawImage(fairyBottle, 82, 24, 76, 76);
+                    ctx.drawImage(strongestPotion, 172, 22, 80, 80);
                     ctx.drawImage(armor, 52, 120, 110, 110);
                     ctx.drawImage(sword, 152, 120, 110, 110);
                     ctx.drawImage(gemEncrustedSword, 252, 120, 110, 110);
 
                 }else if (category === 'mine'){
 
-                    const dynamite          = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
+                    const dynamite          = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/837768119925735465/Dynamite.png');
                     const woodPickaxe       = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
                     const ironPickaxe       = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
                     const silverPickaxe     = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
                     const goldPickaxe       = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
                     const diamondPickaxe    = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
-                    ctx.drawImage(dynamite, 52, 10, 110, 110);
+                    ctx.drawImage(dynamite, 76, 6, 110, 110);
                     ctx.drawImage(woodPickaxe, 52, 120, 110, 110);
                     ctx.drawImage(ironPickaxe, 142, 120, 110, 110);
                     ctx.drawImage(silverPickaxe, 232, 120, 110, 110);
@@ -75,10 +75,10 @@ module.exports = {
                 }else if (category === 'pickpocket'){
 
                     const lockPick          = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
-                    const potionOfShielding = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
+                    const potionOfShielding = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/838032090121502740/Potion_of_Shielding.png');
                     const gloves            = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
                     ctx.drawImage(lockPick, 58, 10, 120, 120);
-                    ctx.drawImage(potionOfShielding, 158, 10, 120, 120);
+                    ctx.drawImage(potionOfShielding, 168, 22, 80, 80);
                     ctx.drawImage(gloves, 58, 110, 120, 120);
                     
                 }
@@ -109,7 +109,7 @@ module.exports = {
 
                                 const canvas = Canvas.createCanvas(140, 140);
                                 const ctx = canvas.getContext('2d');
-                                const fairyBottle = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
+                                const fairyBottle = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/837967891910754314/Fairy_Bottle_V2.png');
                                 ctx.drawImage(fairyBottle, 0, 0, canvas.width, canvas.height);
 
                                 const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `fairy_bottle.png`);
@@ -121,7 +121,7 @@ module.exports = {
                                     .addFields(  
                                         {
                                             name : `Fairy Bottle`, 
-                                            value: `Item Category: ${fairyBottleInformation.rows[0].item_category}\n${fairyBottleInformation.rows[0].item_description}\nCost: ${fairyBottleInformation.rows[0].cost}\nItem Limit: ${fairyBottleInformation.rows[0].item_limit}`, 
+                                            value: `Item Name: ${fairyBottleInformation.rows[0].item_name}\nItem Category: ${fairyBottleInformation.rows[0].item_category}\n${fairyBottleInformation.rows[0].item_description}\nCost: ${fairyBottleInformation.rows[0].cost}\nItem Limit: ${fairyBottleInformation.rows[0].item_limit}`, 
                                             inline: true   
                                         }
                                     )
@@ -149,7 +149,7 @@ module.exports = {
 
                                 const canvas = Canvas.createCanvas(140, 140);
                                 const ctx = canvas.getContext('2d');
-                                const strongestPotion = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
+                                const strongestPotion = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/838027698441551872/Strongest_Potion_v2.png');
                                 ctx.drawImage(strongestPotion, 0, 0, canvas.width, canvas.height);
 
                                 const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `strongest_potion.png`);
@@ -311,7 +311,7 @@ module.exports = {
 
                                 const canvas = Canvas.createCanvas(140, 140);
                                 const ctx = canvas.getContext('2d');
-                                const dynamite = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
+                                const dynamite = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/837768119925735465/Dynamite.png');
                                 ctx.drawImage(dynamite, 0, 0, canvas.width, canvas.height);
 
                                 const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `dynamite.png`);
@@ -593,7 +593,7 @@ module.exports = {
 
                                 const canvas = Canvas.createCanvas(140, 140);
                                 const ctx = canvas.getContext('2d');
-                                const potionOfShielding = await Canvas.loadImage('https://cdn.discordapp.com/attachments/834823235588718592/836544162978725898/Blaziken-Badge-transparent.png');
+                                const potionOfShielding = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/838032090121502740/Potion_of_Shielding.png');
                                 ctx.drawImage(potionOfShielding, 0, 0, canvas.width, canvas.height);
 
                                 const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `potion_of_shielding.png`);

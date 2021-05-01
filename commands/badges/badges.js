@@ -34,6 +34,7 @@ module.exports = {
 			let badgeCheckGamesThree = badgesOwned.some(badgeName => badgeName.badge_name === 'master_thief_badge');
 			let badgeCheckArtOne = badgesOwned.some(badgeName => badgeName.badge_name === 'art_1_badge');
 			let badgeCheckBakingOne = badgesOwned.some(badgeName => badgeName.badge_name === 'baking_1_badge');
+			let badgeCheckTriviaOne = badgesOwned.some(badgeName => badgeName.badge_name === 'trivia_1_badge');
 
 			const canvas = Canvas.createCanvas(560, 340);
 			const ctx = canvas.getContext('2d');
@@ -71,23 +72,28 @@ module.exports = {
 			}
 
 			if(badgeCheckArtOne){
-				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
-				ctx.drawImage(avatar, 112, 116, 120, 120);
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/837035861685960754/Art_Badge.png');
+				ctx.drawImage(avatar, 120, 110, 120, 120);
 			}
 
 			if(badgeCheckBakingOne){
-				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/805037389017645079/831586098819891250/Badge2transparent.png');
-				ctx.drawImage(avatar, 218, 116, 120, 120);
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/837321980549529610/Cake_Badge.png');
+				ctx.drawImage(avatar, 208, 116, 114, 114);
 			}
 
-			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${target.username}-badge-case.png`);
+			if(badgeCheckTriviaOne){
+				const avatar = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/837705453080543249/Trivia_Badge.png');
+				ctx.drawImage(avatar, 330, 116, 114, 114);
+			}
+
+			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `badge-case.png`);
 
 			let badgesEmbed = new Discord.MessageEmbed()
 				.setColor('#0099ff')
 				.setTitle(`Badge Case`)
 				.setDescription(`<@${target.id}>'s Badges`)
 				.attachFiles(attachment)
-				.setImage(`attachment://${target.username}-badge-case.png`);
+				.setImage(`attachment://badge-case.png`);
 
 			return message.channel.send({ embed: badgesEmbed });
 

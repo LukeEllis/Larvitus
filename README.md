@@ -42,6 +42,7 @@ CANVAS TODO
 - [] update inventory to show backpack using Canvas
 - [x] update currency to show wallet using Canvas edit: decided to use canvas for empty wallets as a joke, but use text for general balance queries
 - [x] update shop to return an embed/or image with Canvas
+- [] add badges reaction flow that gives information the same way shop does
 - [] add canvas images for pickpocket game
 - [] add canvas images for dragonslayer game
 - [] add canvas images for mine game
