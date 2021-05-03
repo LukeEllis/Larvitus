@@ -26,6 +26,25 @@ module.exports = {
 			let getBadges = await badges.getBadgesById(target);
 			const badgesOwned = getBadges.rows;
 
+			let badgeList = ``
+			let emojis = [
+				"1️⃣",
+				"2️⃣",
+				"3️⃣",
+				"4️⃣",
+				"5️⃣",
+				"6️⃣",
+				"7️⃣",
+				"8️⃣",
+				"9️⃣"
+			]
+
+			for (i = badgesOwned.length; i > 0; i--){
+
+				badgeList += `${badgesOwned.length - (i-1)} ${badgesOwned[i-1].badge_name}\n`
+
+			}
+
 			let badgeCheckShinyGymOne = badgesOwned.some(badgeName => badgeName.badge_name === 'blazing_blaziken_badge');
 			let badgeCheckShinyGymTwo = badgesOwned.some(badgeName => badgeName.badge_name === 'tyrannus_badge');
 			let badgeCheckShowdownGymOne = badgesOwned.some(badgeName => badgeName.badge_name === 'rockin_out_badge');
@@ -88,12 +107,65 @@ module.exports = {
 
 			const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `badge-case.png`);
 
-			let badgesEmbed = new Discord.MessageEmbed()
+			badgesEmbed = new Discord.MessageEmbed()
 				.setColor('#0099ff')
 				.setTitle(`Badge Case`)
 				.setDescription(`<@${target.id}>'s Badges`)
+				.addFields(  
+                    {
+                        name : `Badges`, 
+                        value: badgeList, 
+                        inline: true   
+                    }
+                )
 				.attachFiles(attachment)
 				.setImage(`attachment://badge-case.png`);
+			
+			badgesEmbed = message.channel.send(badgesEmbed)
+
+			for (i = badgesOwned.length; i > 0; i--){
+				badgesEmbed
+					.then(embedMessage => {
+						embedMessage.react(`${emojis[i-1]}`);
+					});
+			}
+
+			badgesEmbed
+				.then(embedMessage => {
+					embedMessage;
+				
+					const filter = (reaction, target) => reaction.emoji.name === '2️⃣' && target.id != '821544318351179777';
+					const collector = embedMessage.createReactionCollector(filter, { max: 1, time: 5 * 60 * 1000 }); // 5 min
+				
+					collector.on('collect', async () => {
+
+						// const canvas = Canvas.createCanvas(140, 140);
+						// const ctx = canvas.getContext('2d');
+						// const badgeTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/838027698441551872/Strongest_Potion_v2.png');
+						// ctx.drawImage(badgeTwo, 0, 0, canvas.width, canvas.height);
+
+						// const attachment = new Discord.MessageAttachment(canvas.toBuffer(), `${badgesOwned[0].badge_name}`);
+
+						// const embed = new Discord.MessageEmbed()
+						// 	.setColor('#007FFF')
+						// 	.addFields(  
+						// 		{
+						// 			name : `${badgesOwned[0].badge_name}`, 
+						// 			value: `Badge Name: ${badgesOwned[0].badge_name}\nBadge Category: ${badgesOwned[0].badge_category}\n Earned on: ${badgesOwned[0].earned_date}`, 
+						// 			inline: true   
+						// 		}
+						// 	)
+						// 	.attachFiles(attachment)
+						// 	.setImage(`attachment://${badgesOwned[0].badge_name}.png`);  
+		
+						// message.channel.send({ embed: embed })
+						console.log(`hi`)
+					
+					});
+				});
+
+
+
 
 			return message.channel.send({ embed: badgesEmbed });
 

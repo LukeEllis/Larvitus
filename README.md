@@ -1,17 +1,6 @@
 # Larvitus
 Discord bot to handle events for Bluechromed
 
-LOOK AT GAMEBOI CODE TO UNDERSTAND CANVAS GENERATION
-
-Total time spent making bot:
-- as of 4/22/2021 - 10 hours
-- 4/23/2021 - 19 hours
-- 4/24/2021 - 26 hours
-- 4/25/2021 - 38.5 hours
-- 4/26/2021 - 41 hours
-- 4/27/2021 - 44 hours
-- 4/28/2021 - 46 hours (5:00 pm)
-
 TODO
 - [x] create inventory 
 - [x] update badges with earned_date with a timestamp
@@ -35,7 +24,7 @@ TODO
 - [] calculate currency gain rate of games
 - [] calculate chances of game outcomes
 - [] make display dates WAY prettier
-- [] bug with little_t's badge case
+- [x] bug with little_t's badge case (attachment name cannot have spaces)
 
 CANVAS TODO
 - [x] update badges to show badge case using Canvas

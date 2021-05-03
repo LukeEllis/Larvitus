@@ -39,26 +39,37 @@ module.exports = {
 			let inventoryPageThreeArray = []
             let inventoryPageFour = "----------------------------\n"
 			let inventoryPageFourArray = []
+            let emojis = [
+				"1️⃣",
+				"2️⃣",
+				"3️⃣",
+				"4️⃣",
+				"5️⃣",
+				"6️⃣",
+				"7️⃣",
+				"8️⃣",
+				"9️⃣"
+			]
 
-            const canvasOne = Canvas.createCanvas(300, 300);
-			const ctxOne = canvasOne.getContext('2d');
-			const backgroundOne = await Canvas.loadImage('https://cdn.discordapp.com/attachments/821548132918886440/837847655136231444/Layer_1.png');
-			ctxOne.drawImage(backgroundOne, 0, 0, canvasOne.width, canvasOne.height);
+            // const canvasOne = Canvas.createCanvas(300, 300);
+			// const ctxOne = canvasOne.getContext('2d');
+			// const backgroundOne = await Canvas.loadImage('https://cdn.discordapp.com/attachments/821548132918886440/837847655136231444/Layer_1.png');
+			// ctxOne.drawImage(backgroundOne, 0, 0, canvasOne.width, canvasOne.height);
 
-            const canvasTwo = Canvas.createCanvas(300, 300);
-			const ctxTwo = canvasTwo.getContext('2d');
-			const backgroundTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/821548132918886440/837847655136231444/Layer_1.png');
-			ctxTwo.drawImage(backgroundTwo, 0, 0, canvasTwo.width, canvasTwo.height);
+            // const canvasTwo = Canvas.createCanvas(300, 300);
+			// const ctxTwo = canvasTwo.getContext('2d');
+			// const backgroundTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/821548132918886440/837847655136231444/Layer_1.png');
+			// ctxTwo.drawImage(backgroundTwo, 0, 0, canvasTwo.width, canvasTwo.height);
 
-            const canvasThree = Canvas.createCanvas(300, 300);
-			const ctxThree = canvasThree.getContext('2d');
-			const backgroundThree = await Canvas.loadImage('https://cdn.discordapp.com/attachments/821548132918886440/837847655136231444/Layer_1.png');
-			ctxThree.drawImage(backgroundThree, 0, 0, canvasThree.width, canvasThree.height);
+            // const canvasThree = Canvas.createCanvas(300, 300);
+			// const ctxThree = canvasThree.getContext('2d');
+			// const backgroundThree = await Canvas.loadImage('https://cdn.discordapp.com/attachments/821548132918886440/837847655136231444/Layer_1.png');
+			// ctxThree.drawImage(backgroundThree, 0, 0, canvasThree.width, canvasThree.height);
 
-            const canvasFour = Canvas.createCanvas(300, 300);
-			const ctxFour = canvasFour.getContext('2d');
-			const backgroundFour = await Canvas.loadImage('https://cdn.discordapp.com/attachments/821548132918886440/837847655136231444/Layer_1.png');
-			ctxFour.drawImage(backgroundFour, 0, 0, canvasFour.width, canvasFour.height);
+            // const canvasFour = Canvas.createCanvas(300, 300);
+			// const ctxFour = canvasFour.getContext('2d');
+			// const backgroundFour = await Canvas.loadImage('https://cdn.discordapp.com/attachments/821548132918886440/837847655136231444/Layer_1.png');
+			// ctxFour.drawImage(backgroundFour, 0, 0, canvasFour.width, canvasFour.height);
 
             console.log(`itemNumberInInventory`, itemNumberInInventory)
             
@@ -66,73 +77,73 @@ module.exports = {
 
                 if (i <= 9){
 
-                    inventoryPageOne += `${itemNumberInInventory-i} ${getInventory.rows[i-1].item_name} ${getInventory.rows[i-1].amount}\n`
+                    inventoryPageOne += `${emojis[itemNumberInInventory-i-1]} ${getInventory.rows[i-1].item_name} x${getInventory.rows[i-1].amount}\n`
                     inventoryPageOneArray.push(`${getInventory.rows[i-1].item_name}`)
 
-                    if (i <= 3){
-                        const itemsOne = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxOne.drawImage(itemsOne, (6+((i-1)*100)), 8, 90, 90);
-                    }else if (i <= 6){
-                        const itemsOne = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxOne.drawImage(itemsOne, (6+((i-4)*100)), 108, 90, 90);
-                    }else if (i <= 9){
-                        const itemsOne = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxOne.drawImage(itemsOne, (6+((i-7)*100)), 208, 90, 90);
-                    }
+                    // if (i <= 3){
+                    //     const itemsOne = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxOne.drawImage(itemsOne, (6+((i-1)*100)), 8, 90, 90);
+                    // }else if (i <= 6){
+                    //     const itemsOne = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxOne.drawImage(itemsOne, (6+((i-4)*100)), 108, 90, 90);
+                    // }else if (i <= 9){
+                    //     const itemsOne = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxOne.drawImage(itemsOne, (6+((i-7)*100)), 208, 90, 90);
+                    // }
 
                 }else if (i <= 18){
 
-                    inventoryPageTwo += `${itemNumberInInventory - (i-1)} ${getInventory.rows[i-1].item_name} ${getInventory.rows[i-1].amount}\n`
+                    inventoryPageTwo += `${emojis[itemNumberInInventory - (i)]} ${getInventory.rows[i-1].item_name} x${getInventory.rows[i-1].amount}\n`
                     inventoryPageTwoArray.push(`${getInventory.rows[i-1].item_name}`)
 
-                    if (i <= 12){
-                        const itemsTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxTwo.drawImage(itemsTwo, (6+((i-10)*100)), 8, 90, 90);
-                    }else if (i <= 15){
-                        const itemsTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxTwo.drawImage(itemsTwo, (6+((i-13)*100)), 108, 90, 90);
-                    }else if (i <= 18){
-                        const itemsTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxTwo.drawImage(itemsTwo, (6+((i-16)*100)), 208, 90, 90);
-                    }
+                    // if (i <= 12){
+                    //     const itemsTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxTwo.drawImage(itemsTwo, (6+((i-10)*100)), 8, 90, 90);
+                    // }else if (i <= 15){
+                    //     const itemsTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxTwo.drawImage(itemsTwo, (6+((i-13)*100)), 108, 90, 90);
+                    // }else if (i <= 18){
+                    //     const itemsTwo = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxTwo.drawImage(itemsTwo, (6+((i-16)*100)), 208, 90, 90);
+                    // }
 
                 }else if (i <= 27){
 
-                    inventoryPageThree += `${itemNumberInInventory - (i-1)} ${getInventory.rows[i-1].item_name} ${getInventory.rows[i-1].amount}\n`
+                    inventoryPageThree += `${emojis[itemNumberInInventory - (i)]} ${getInventory.rows[i-1].item_name} x${getInventory.rows[i-1].amount}\n`
                     inventoryPageThreeArray.push(`${getInventory.rows[i-1].item_name}`)
 
-                    if (i <= 21){
-                        const itemsThree = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxThree.drawImage(itemsThree, (6+((i-19)*100)), 8, 90, 90);
-                    }else if (i <= 24){
-                        const itemsThree = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxThree.drawImage(itemsThree, (6+((i-22)*100)), 108, 90, 90);
-                    }else if (i <= 27){
-                        const itemsThree = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxThree.drawImage(itemsThree, (6+((i-25)*100)), 208, 90, 90);
-                    }
+                    // if (i <= 21){
+                    //     const itemsThree = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxThree.drawImage(itemsThree, (6+((i-19)*100)), 8, 90, 90);
+                    // }else if (i <= 24){
+                    //     const itemsThree = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxThree.drawImage(itemsThree, (6+((i-22)*100)), 108, 90, 90);
+                    // }else if (i <= 27){
+                    //     const itemsThree = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxThree.drawImage(itemsThree, (6+((i-25)*100)), 208, 90, 90);
+                    // }
 
                 }else if (i <= 32){
 
-                    inventoryPageFour += `${itemNumberInInventory - (i-1)} ${getInventory.rows[i-1].item_name} ${getInventory.rows[i-1].amount}\n`
+                    inventoryPageFour += `${emojis[itemNumberInInventory - (i)]} ${getInventory.rows[i-1].item_name} x${getInventory.rows[i-1].amount}\n`
                     inventoryPageFourArray.push(`${getInventory.rows[i-1].item_name}`)
 
-                    if (i <= 30){
-                        const itemsFour = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxFour.drawImage(itemsFour, (6+((i-28)*100)), 8, 90, 90);
-                    }else if (i <= 32){
-                        const itemsFour = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
-                        ctxFour.drawImage(itemsFour, (6+((i-31)*100)), 108, 90, 90);
-                    }
+                    // if (i <= 30){
+                    //     const itemsFour = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxFour.drawImage(itemsFour, (6+((i-28)*100)), 8, 90, 90);
+                    // }else if (i <= 32){
+                    //     const itemsFour = await Canvas.loadImage('https://cdn.discordapp.com/attachments/836571397630459904/836640426374594590/Dragon_Slayer_Badge.png');
+                    //     ctxFour.drawImage(itemsFour, (6+((i-31)*100)), 108, 90, 90);
+                    // }
 
                 }
 
             }
 
-            const attachmentOne = new Discord.MessageAttachment(canvasOne.toBuffer(), `${target.username}-inventory.png`);
-            const attachmentTwo = new Discord.MessageAttachment(canvasTwo.toBuffer(), `${target.username}-inventory.png`);
-            const attachmentThree = new Discord.MessageAttachment(canvasThree.toBuffer(), `${target.username}-inventory.png`);
-            const attachmentFour = new Discord.MessageAttachment(canvasFour.toBuffer(), `${target.username}-inventory.png`);
+            // const attachmentOne = new Discord.MessageAttachment(canvasOne.toBuffer(), `${target.username}-inventory.png`);
+            // const attachmentTwo = new Discord.MessageAttachment(canvasTwo.toBuffer(), `${target.username}-inventory.png`);
+            // const attachmentThree = new Discord.MessageAttachment(canvasThree.toBuffer(), `${target.username}-inventory.png`);
+            // const attachmentFour = new Discord.MessageAttachment(canvasFour.toBuffer(), `${target.username}-inventory.png`);
 
             console.log(`inventoryPageOne`, inventoryPageOne)
             console.log(`inventoryPageTwo`, inventoryPageTwo)
@@ -152,9 +163,9 @@ module.exports = {
                             value: inventoryPageOne,
                             inline: true
                         }
-                    )
-                    .attachFiles(attachmentOne, `${target.username}-inventory.png`)
-                    .setImage(`attachment://${target.username}-inventory.png`),
+                    ),
+                    // .attachFiles(attachmentOne, `${target.username}-inventory.png`)
+                    // .setImage(`attachment://${target.username}-inventory.png`),
                 reactions: {
                     '➡️': 'inventoryTwo',
                 }
@@ -171,9 +182,9 @@ module.exports = {
                             value: inventoryPageTwo,
                             inline: true
                         }
-                    )
-                    .attachFiles(attachmentTwo, `${target.username}-inventory.png`)
-                    .setImage(`attachment://${target.username}-inventory.png`),
+                    ),
+                    // .attachFiles(attachmentTwo, `${target.username}-inventory.png`)
+                    // .setImage(`attachment://${target.username}-inventory.png`),
                 reactions: {
                     '⬅️': 'inventoryOne',
                     '➡️': 'inventoryThree',
@@ -191,9 +202,9 @@ module.exports = {
                             value: inventoryPageThree,
                             inline: true
                         }
-                    )
-                    .attachFiles(attachmentThree, `${target.username}-inventory.png`)
-                    .setImage(`attachment://${target.username}-inventory.png`) ,
+                    ),
+                    // .attachFiles(attachmentThree, `${target.username}-inventory.png`)
+                    // .setImage(`attachment://${target.username}-inventory.png`) ,
                 reactions: {
                     '⬅️': 'inventoryTwo',
                     '➡️': 'inventoryFour',
@@ -211,9 +222,9 @@ module.exports = {
                             value: inventoryPageFour,
                             inline: true
                         }
-                    )
-                    .attachFiles(attachmentFour, `${target.username}-inventory.png`)
-                    .setImage(`attachment://${target.username}-inventory.png`),
+                    ),
+                    // .attachFiles(attachmentFour, `${target.username}-inventory.png`)
+                    // .setImage(`attachment://${target.username}-inventory.png`),
                 reactions: {
                     '⬅️': 'inventoryThree'
                 }
