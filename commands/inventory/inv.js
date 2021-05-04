@@ -150,6 +150,18 @@ module.exports = {
             console.log(`inventoryPageThree`, inventoryPageThree)
             console.log(`inventoryPageFour`, inventoryPageFour)
 
+            let emojis = [
+				"1️⃣",
+				"2️⃣",
+				"3️⃣",
+				"4️⃣",
+				"5️⃣",
+				"6️⃣",
+				"7️⃣",
+				"8️⃣",
+				"9️⃣"
+			]
+
             let invMenu = new Menu(message.channel, message.author.id, [
             {
                 name: 'inventoryOne',
@@ -167,7 +179,7 @@ module.exports = {
                     // .attachFiles(attachmentOne, `${target.username}-inventory.png`)
                     // .setImage(`attachment://${target.username}-inventory.png`),
                 reactions: {
-                    '➡️': 'inventoryTwo',
+                    '➡️': 'inventoryTwo'
                 }
             },
             {
@@ -232,6 +244,33 @@ module.exports = {
         ], 300000)
 
         invMenu.start()
+
+        helpMenu.on('pageChange', destination => {
+            
+            for (i = itemNumberInInventory; i > 0; i--){
+						
+                if (i <= 9){
+
+                    let emojiNumber = itemNumberInInventory - i;
+                    inventoryPageOneEmbed.react(`${emojis[emojiNumber-1]}`);
+
+                }
+            
+            }
+        })
+
+            // for (i = itemNumberInInventory; i > 0; i--){
+						
+            //     if (i <= 9){
+
+            //         let emojiNumber = itemNumberInInventory - i;
+            //         inventoryPageOneEmbed.react(`${emojis[emojiNumber-1]}`);
+
+            //     }
+            
+            // }
+
+            //inventoryPageOneEmbed.react('➡️')
 
 		}catch (err){
 			console.error(err.message)

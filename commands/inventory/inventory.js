@@ -55,7 +55,7 @@ module.exports = {
 
 				for (i = itemNumberInInventory; i > 0; i--){
 
-					inventoryPageOne += `${itemNumberInInventory - (i-1)} ${getInventory.rows[i-1].item_name}\n`
+					inventoryPageOne += `${emojis[itemNumberInInventory-i-1]} ${getInventory.rows[i-1].item_name} x${getInventory.rows[i-1].amount}\n`
 
 					inventoryOne.push(`${getInventory.rows[i-1].item_name}`)
 
@@ -276,15 +276,6 @@ module.exports = {
 					"6️⃣",
 					"7️⃣",
 					"8️⃣",
-					"9️⃣",
-					"1️⃣",
-					"2️⃣",
-					"3️⃣",
-					"4️⃣",
-					"5️⃣",
-					"6️⃣",
-					"7️⃣",
-					"8️⃣",
 					"9️⃣"
 				]
 
@@ -294,12 +285,12 @@ module.exports = {
 
 						if (i <= 9){
 
-							inventoryPageOne += `${itemNumberInInventory-i} ${getInventory.rows[i-1].item_name}\n`
+							inventoryPageOne += `${emojis[itemNumberInInventory-i-1]} ${getInventory.rows[i-1].item_name} x${getInventory.rows[i-1].amount}\n`
 							inventoryOne.push(`${getInventory.rows[i-1].item_name}`)
 
 						}else if (i <= 18){
 
-							inventoryPageTwo += `${itemNumberInInventory - (i-1)} ${getInventory.rows[i-1].item_name}\n`
+							inventoryPageTwo += `${emojis[itemNumberInInventory - (i)]} ${getInventory.rows[i-1].item_name} x${getInventory.rows[i-1].amount}\n`
 
 							inventoryTwo.push(`${getInventory.rows[i-1].item_name}`)
 

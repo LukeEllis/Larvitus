@@ -37,7 +37,7 @@ CANVAS TODO
 - [] add canvas images for mine game
 
 LONG TODO
-- [] integrate with Twitch
+- [x] integrate with Twitch
 - [] implement games on Twitch
 - [] better rewards or higher chance of better rewards on Twitch
 - [] add varied cooldowns for Discord/Twitch to incentivize using them on livestreams

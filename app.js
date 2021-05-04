@@ -1,6 +1,7 @@
 const fs = require('fs');
+const tmi = require('tmi.js');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+const { prefix, token, twitch_bot_name, twitch_oauth_token, twitch_channel_name } = require('./config.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
