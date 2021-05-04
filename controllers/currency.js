@@ -55,3 +55,43 @@ exports.pvpDateCheck = async (target) => {
     )
     return pvpDateResponse
 }
+
+exports.updateWalletTwitch = async (target, discordId) => {
+    let updateWalletTwitchResponse = await db.query(
+        'UPDATE main.currency SET twitch_id = $1 WHERE user_id = $2 RETURNING *',
+        [`${target.username}`, `${discordId}`]
+    )
+    return updateWalletTwitchResponse
+}
+
+exports.getCurrencyByIdTwitch = async (target) => {
+    let getCurrencyResponse = await db.query(
+        'SELECT * FROM main.currency WHERE twitch_id = $1',
+        [target.username]
+    )
+    return getCurrencyResponse
+}
+
+exports.addCurrencyTwitch = async (amount, target) => {
+    let addCurrencyTwitchResponse = await db.query(
+        'UPDATE main.currency SET currency = currency + $1 WHERE twitch_id = $2 RETURNING *',
+        [`${amount}`, `${target.username}`]
+    )
+    return addCurrencyTwitchResponse
+}
+
+exports.updateCurrencyTwitch = async (amount, target) => {
+    let updateCurrencyTwitchResponse = await db.query(
+        'UPDATE main.currency SET currency = $1 WHERE twitch_id = $2 RETURNING *',
+        [`${amount}`, `${target.username}`]
+    )
+    return updateCurrencyTwitchResponse
+}
+
+exports.removeCurrencyTwitch = async (amount, target) => {
+    let removeCurrencyTwitchResponse = await db.query(
+        'UPDATE main.currency SET currency = currency - $1 WHERE twitch_id = $2 RETURNING *',
+        [`${amount}`, `${target.username}`]
+    )
+    return removeCurrencyTwitchResponse
+}

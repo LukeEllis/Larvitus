@@ -39,6 +39,9 @@ CANVAS TODO
 LONG TODO
 - [x] integrate with Twitch
 - [] implement games on Twitch
+    - [x] dragonslayer
+    - [] mine
+    - [] pickpocket
 - [] better rewards or higher chance of better rewards on Twitch
 - [] add varied cooldowns for Discord/Twitch to incentivize using them on livestreams
 - [] update inventory to be viewable in Twitch

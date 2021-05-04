@@ -43,3 +43,27 @@ exports.getBadgeByBadgeName = async (badgeName) => {
     )
     return getBadgeByBadgeNameResponse
 }
+
+exports.checkBadgeTwitch = async (target, badgeName) => {
+    let checkBadgeTwitchResponse = await db.query(
+        'SELECT * FROM main.badges WHERE twitch_id = $1 AND badge_name = $2',
+        [`${target.username}`, `${badgeName}`]
+    )
+    return checkBadgeTwitchResponse
+}
+
+exports.addBadgesTwitch = async (target, badgeName) => {
+    let getBadgeCategories = await db.query(
+        'SELECT badge_category FROM main.badge_case WHERE badge_name = $1',
+        [`${badgeName}`]
+    )
+    let getDiscordUserId = await db.query(
+        'SELECT user_id FROM main.currency WHERE twitch_id = $1',
+        [`${target.username}`]
+    )
+    let addBadgesTwitchResponse = await db.query(
+        'INSERT INTO main.badges (user_id, user_name, badge_category, badge_name, earned_date, twitch_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+        [`${getDiscordUserId.rows[0].id}`, `${target.username}`, `${getBadgeCategories.rows[0].badge_category}`, `${badgeName}`, new Date(), `${target.username}`]
+    )
+    return addBadgesTwitchResponse
+}

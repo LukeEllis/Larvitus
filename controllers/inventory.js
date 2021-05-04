@@ -59,3 +59,59 @@ exports.clearInventory = async (target, itemName) => {
     )
     return clearInventoryResponse
 }
+
+exports.getInventoryByIdTwitch = async (target) => {
+    let getInventoryByIdTwitchResponse = await db.query(
+        'SELECT * FROM main.inventory WHERE twitch_id = $1',
+        [`${target.username}`]
+    )
+    return getInventoryByIdTwitchResponse
+}
+
+exports.itemCheckTwitch = async (target, itemName) => {
+    let itemCheckTwitchResponse = await db.query(
+        'SELECT * from main.inventory WHERE twitch_id = $1 AND item_name = $2',
+        [`${target.username}`, `${itemName}`]
+    )
+    return itemCheckTwitchResponse
+}
+
+exports.createItemEntryTwitch = async (target, itemName, amount) => {
+    let getItemCategories = await db.query(
+        'SELECT item_category FROM main.shop WHERE item_name = $1',
+        [`${itemName}`]
+    )
+    let getDiscordUserId = await db.query(
+        'SELECT user_id FROM main.currency WHERE twitch_id = $1',
+        [`${target.username}`]
+    )
+    let createItemEntryTwitchResponse = await db.query(
+        'INSERT INTO main.inventory (user_id, user_name, item_category, item_name, amount, twitch_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+        [`${getDiscordUserId.rows[0].id}`, `${target.username}`, `${getItemCategories.rows[0].item_category}`, `${itemName}`, `${amount}`, `${target.username}`]
+    )
+    return createItemEntryTwitchResponse
+}
+
+exports.addToInventoryTwitch = async (target, itemName, amount) => {
+    let addToInventoryTwitchResponse = await db.query(
+        'UPDATE main.inventory SET amount = amount + $1 WHERE twitch_id = $2 AND item_name = $3 RETURNING *',
+        [`${amount}`, `${target.username}`, `${itemName}`]
+    )
+    return addToInventoryTwitchResponse
+}
+
+exports.removeFromInventoryTwitch = async (target, itemName, amount) => {
+    let removeFromInventoryTwitchResponse = await db.query(
+        'UPDATE main.inventory SET amount = amount - $1 WHERE twitch_id = $2 AND item_name = $3 RETURNING *',
+        [`${amount}`, `${target.username}`, `${itemName}`]
+    )
+    return removeFromInventoryTwitchResponse
+}
+
+exports.clearInventoryTwitch = async (target, itemName) => {
+    let clearInventoryTwitchResponse = await db.query(
+        'UPDATE main.inventory SET amount = $1 WHERE twitch_id = $2 AND item_name = $3 RETURNING *',
+        [0, `${target.username}`, `${itemName}`]
+    )
+    return clearInventoryTwitchResponse
+}

@@ -73,3 +73,11 @@ exports.getInventoryOfItemsWithPower = async (target, itemCategory) => {
     )
     return getInventoryOfItemsWithPowerResponse
 }
+
+exports.getInventoryOfItemsWithPowerTwitch = async (target, itemCategory) => {
+    let getInventoryOfItemsWithPowerTwitchResponse = await db.query(
+        'SELECT * FROM games.inventory_of_items_with_power WHERE twitch_id = $1 AND item_category = $2',
+        [`${target.username}`, `${itemCategory}`]
+    )
+    return getInventoryOfItemsWithPowerTwitchResponse
+}
