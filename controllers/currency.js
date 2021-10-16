@@ -10,7 +10,7 @@ exports.getCurrencyById = async (target) => {
 
 exports.addCurrency = async (amount, target) => {
     let addCurrencyResponse = await db.query(
-        'UPDATE stc.currency SET currency = currency + $1 WHERE discord_user_id = $2 RETURNING *',
+        'UPDATE stc.currency SET total_points = total_points + $1, current_points = current_points + $1 WHERE discord_user_id = $2 RETURNING *',
         [`${amount}`, `${target.id}`]
     )
     return addCurrencyResponse
@@ -18,7 +18,7 @@ exports.addCurrency = async (amount, target) => {
 
 exports.updateCurrency = async (amount, target) => {
     let updateCurrencyResponse = await db.query(
-        'UPDATE stc.currency SET currency = $1 WHERE discord_user_id = $2 RETURNING *',
+        'UPDATE stc.currency SET current_points = $1 WHERE discord_user_id = $2 RETURNING *',
         [`${amount}`, `${target.id}`]
     )
     return updateCurrencyResponse
@@ -26,7 +26,7 @@ exports.updateCurrency = async (amount, target) => {
 
 exports.removeCurrency = async (amount, target) => {
     let removeCurrencyResponse = await db.query(
-        'UPDATE stc.currency SET currency = currency - $1 WHERE discord_user_id = $2 RETURNING *',
+        'UPDATE stc.currency SET current_points = current_points - $1 WHERE discord_user_id = $2 RETURNING *',
         [`${amount}`, `${target.id}`]
     )
     return removeCurrencyResponse
@@ -38,12 +38,4 @@ exports.createUserProfile = async (target) => {
         [`${target.id}`, `${target.username}`, 0, 0]
     )
     return createUserProfileResponse
-}
-
-exports.canUserAfford = async (balance, cost, validItemName) => {
-    console.log(`balance`, balance.rows[0].current_points)
-    console.log(`cost`, cost)
-    if (balance.rows[0].current_points < cost){
-        return message.channel.send(`You cannot afford ${validItemName.rows[0].reward_name} right now. Keep saving up points!`);
-    }
 }

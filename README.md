@@ -1,6 +1,8 @@
 # Larvitus
 Discord bot to handle events for Bluechromed
 
+shop - get shop to show up
+
 TODO
 - [x] create inventory 
 - [x] update badges with earned_date with a timestamp

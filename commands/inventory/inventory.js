@@ -26,13 +26,13 @@ module.exports = {
 
 			let getInventory = await inventory.getInventoryById(target);
 			let inventoryEmbed = new Discord.MessageEmbed()
-				.setColor('#0099ff')
+				.setColor('RANDOM')
 				.setTitle(`Inventory`)
 				.setDescription(`<@${target.id}>`);
 			for (i = getInventory.rows.length; i > 0; i--){
 				inventoryEmbed.addFields(
 						{
-							name : `${getInventory.rows[i-1].reward_name}`, value: `Reward Type: ${getInventory.rows[i-1].reward_type} Cost: ${getInventory.rows[i-1].reward_point_cost} Amount: x${getInventory.rows[i-1].amount}`, inline: false
+							name : `${getInventory.rows[i-1].reward_name}`, value: `Reward Type: ${getInventory.rows[i-1].reward_type} \nCost: ${getInventory.rows[i-1].reward_point_cost} \nAmount: x${getInventory.rows[i-1].amount}`, inline: false
 						}
 				)
 			}

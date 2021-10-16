@@ -2,10 +2,18 @@ const db = require("../services/postgres.service");
 
 exports.getInventoryById = async (target) => {
     let getInventoryResponse = await db.query(
-        'SELECT b.reward_name, b.reward_type, b.reward_point_cost, a.amount FROM stc.redeems b, stc.rewards a WHERE b.reward_id = a_reward_id = $1',
+        'SELECT a.reward_name, a.reward_type, a.reward_point_cost, b.amount FROM stc.rewards a, stc.redeems b WHERE a.reward_id = b.reward_id AND b.discord_user_id = $1',
         [`${target.id}`]
     )
     return getInventoryResponse
+}
+
+exports.getItemCategories = async (itemName) => {
+    let getItemCategoriesResponse = await db.query(
+        'SELECT * FROM stc.rewards WHERE reward_name = $1',
+        [`${itemName}`]
+    )
+    return getItemCategoriesResponse
 }
 
 exports.itemCheck = async (target, itemName) => {

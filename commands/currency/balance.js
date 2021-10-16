@@ -28,7 +28,7 @@ module.exports = {
 				const attachment = 'https://media0.giphy.com/media/yIxNOXEMpqkqA/giphy.gif';
 
 				let balanceEmbed = new Discord.MessageEmbed()
-				.setColor('#0099ff')
+				.setColor('RANDOM')
 				.setTitle(`Wallet`)
 				.setDescription(`<@${target.id}>'s Balance`)
 				.setImage(attachment);

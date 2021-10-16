@@ -10,38 +10,36 @@ module.exports = {
 	async execute(message, args) {
         const target = message.author;
 
-        if (category){
+        try{
 
-            try{
+            let getShop = await shop.getShop();
 
-                let getShop = await shop.getShop();
+            let itemList = ``
 
-                let itemList = ``
+            for (i = getShop.rows.length; i > 0; i--){
 
-                for (i = getShop.rows.length; i > 0; i--){
+                itemList += `\n${getShop.rows.length - (i-1)} Reward Name: ${getShop.rows[i-1].reward_name} \nReward Type: ${getShop.rows[i-1].reward_type} \nCost: ${getShop.rows[i-1].reward_point_cost} points \nLimit: ${getShop.rows[i-1].reward_limit}\n`
 
-                    itemList += `${getShop.rows.length - (i-1)} Reward Name: ${getShop.rows[i-1].reward_name} \nReward Type: ${getShop.rows[i-1].reward_type} \nCost:${getShop.rows[i-1].reward_point_cost} points \nLimit:${getShop.rows[i-1].reward_limit}x\n`
-
-                }
-
-                let shopEmbed = new Discord.MessageEmbed()
-                .setColor('#0099ff')
-                .setTitle(`Shop`)
-                .setDescription(`Redeem your points for prizes!`)
-                .addFields(  
-                    {
-                        name : `Redeems`, 
-                        value: itemList, 
-                        inline: true   
-                    }
-                );
-
-                let newMessage = message.channel.send({ embed: shopEmbed })
-
-            }catch (err){
-                console.error(err.message)
-                return errors.errorMessage(message)
             }
+
+            let shopEmbed = new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle(`Shop`)
+            .setDescription(`Redeem your points for prizes!`)
+            .addFields(  
+                {
+                    name : `Redeems`, 
+                    value: itemList, 
+                    inline: true   
+                }
+            );
+
+            let newMessage = message.channel.send({ embed: shopEmbed })
+
+        }catch (err){
+            console.error(err.message)
+            return errors.errorMessage(message)
         }
+
 	},
 };
