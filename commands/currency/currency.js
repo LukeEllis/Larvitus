@@ -18,7 +18,9 @@ module.exports = {
 			if(!moderators.includes(author.id)){
 				return message.channel.send(`Beep boop. User does not have admin permissions to perform this command.`)
 			}else if(doesUserExist.rows.length < 1){
-				return message.channel.send(`User not found! User must initialize themselves with the !init command.`)
+				let createUserProfile = await currency.createUserProfile(target);
+				console.log('Created user profile: ', createUserProfile)
+				return message.channel.send(`${target.username} has had their user profile created and is ready to start earning points!`)
 			}else if (amount < 0){
 				return message.channel.send(`Using negative numbers is weird. Stop that.`);
 			}
@@ -30,7 +32,7 @@ module.exports = {
 		if (action === 'add'){
 			try{
 				let addToUserWallet = await currency.addCurrency(amount, target);
-				message.channel.send(`${author.username} has successfully added ${amount} Pokédollars to ${target.username}'s wallet.`);
+				message.channel.send(`${author.username} has successfully added ${amount} points to ${target.username}'s current balance.`);
 			}catch (err){
 				console.error(err.message)
 				return errors.errorMessage(message)
@@ -38,7 +40,7 @@ module.exports = {
 		}else if (action === 'update'){
 			try{
 				let updateUserCurrency = await currency.updateCurrency(amount, target);
-				message.channel.send(`${author.username} has successfully updated ${target.username}'s wallet to ${amount} Pokédollars.`);
+				message.channel.send(`${author.username} has successfully updated ${target.username}'s current balance to ${amount} points.`);
 			}catch (err){
 				console.error(err.message)
 				return errors.errorMessage(message)
@@ -50,7 +52,7 @@ module.exports = {
                     return message.channel.send(`The currency to be removed cannot reduce the total to below zero.`);
                 }
 				let removeFromUserWallet = await currency.removeCurrency(amount, target);
-				message.channel.send(`${author.username} has successfully removed ${amount} Pokédollars from ${target.username}'s wallet.`);
+				message.channel.send(`${author.username} has successfully removed ${amount} points from ${target.username}'s current balance.`);
 			}catch (err){
 				console.error(err.message)
 				return errors.errorMessage(message)

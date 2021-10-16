@@ -1,16 +1,8 @@
 const db = require("../services/postgres.service");
 
-exports.createNewUserWallet = async (target) => {
-    let newWalletResponse = await db.query(
-        'INSERT INTO main.currency (user_id, user_name, currency) VALUES ($1, $2, $3) RETURNING *',
-        [`${target.id}`, `${target.username}`, 0]
-    )
-    return newWalletResponse
-}
-
 exports.getCurrencyById = async (target) => {
     let getCurrencyResponse = await db.query(
-        'SELECT * FROM main.currency WHERE user_id = $1',
+        'SELECT * FROM stc.currency WHERE discord_user_id = $1',
         [target.id]
     )
     return getCurrencyResponse
@@ -18,7 +10,7 @@ exports.getCurrencyById = async (target) => {
 
 exports.addCurrency = async (amount, target) => {
     let addCurrencyResponse = await db.query(
-        'UPDATE main.currency SET currency = currency + $1 WHERE user_id = $2 RETURNING *',
+        'UPDATE stc.currency SET currency = currency + $1 WHERE discord_user_id = $2 RETURNING *',
         [`${amount}`, `${target.id}`]
     )
     return addCurrencyResponse
@@ -26,7 +18,7 @@ exports.addCurrency = async (amount, target) => {
 
 exports.updateCurrency = async (amount, target) => {
     let updateCurrencyResponse = await db.query(
-        'UPDATE main.currency SET currency = $1 WHERE user_id = $2 RETURNING *',
+        'UPDATE stc.currency SET currency = $1 WHERE discord_user_id = $2 RETURNING *',
         [`${amount}`, `${target.id}`]
     )
     return updateCurrencyResponse
@@ -34,64 +26,24 @@ exports.updateCurrency = async (amount, target) => {
 
 exports.removeCurrency = async (amount, target) => {
     let removeCurrencyResponse = await db.query(
-        'UPDATE main.currency SET currency = currency - $1 WHERE user_id = $2 RETURNING *',
+        'UPDATE stc.currency SET currency = currency - $1 WHERE discord_user_id = $2 RETURNING *',
         [`${amount}`, `${target.id}`]
     )
     return removeCurrencyResponse
 }
 
-exports.updatePvp = async (target, pvpFlag) => {
-    let updatePvpResponse = await db.query(
-        'UPDATE main.currency SET pvp = $1, pvp_time = current_timestamp WHERE user_id = $2 RETURNING *',
-        [`${pvpFlag}`, `${target.id}`]
+exports.createUserProfile = async (target) => {
+    let createUserProfileResponse = await db.query(
+        'INSERT INTO stc.currency (discord_user_id, username, total_points, current_points) VALUES ($1, $2, $3, $4) RETURNING *',
+        [`${target.id}`, `${target.username}`, 0, 0]
     )
-    return updatePvpResponse
+    return createUserProfileResponse
 }
 
-exports.pvpDateCheck = async (target) => {
-    let pvpDateResponse = await db.query(
-        `SELECT pvp_time FROM main.currency WHERE user_id = $1 AND pvp_time < (current_timestamp - INTERVAL '1 DAY')`,
-        [`${target.id}`]
-    )
-    return pvpDateResponse
-}
-
-exports.updateWalletTwitch = async (target, discordId) => {
-    let updateWalletTwitchResponse = await db.query(
-        'UPDATE main.currency SET twitch_id = $1 WHERE user_id = $2 RETURNING *',
-        [`${target.username}`, `${discordId}`]
-    )
-    return updateWalletTwitchResponse
-}
-
-exports.getCurrencyByIdTwitch = async (target) => {
-    let getCurrencyResponse = await db.query(
-        'SELECT * FROM main.currency WHERE twitch_id = $1',
-        [target.username]
-    )
-    return getCurrencyResponse
-}
-
-exports.addCurrencyTwitch = async (amount, target) => {
-    let addCurrencyTwitchResponse = await db.query(
-        'UPDATE main.currency SET currency = currency + $1 WHERE twitch_id = $2 RETURNING *',
-        [`${amount}`, `${target.username}`]
-    )
-    return addCurrencyTwitchResponse
-}
-
-exports.updateCurrencyTwitch = async (amount, target) => {
-    let updateCurrencyTwitchResponse = await db.query(
-        'UPDATE main.currency SET currency = $1 WHERE twitch_id = $2 RETURNING *',
-        [`${amount}`, `${target.username}`]
-    )
-    return updateCurrencyTwitchResponse
-}
-
-exports.removeCurrencyTwitch = async (amount, target) => {
-    let removeCurrencyTwitchResponse = await db.query(
-        'UPDATE main.currency SET currency = currency - $1 WHERE twitch_id = $2 RETURNING *',
-        [`${amount}`, `${target.username}`]
-    )
-    return removeCurrencyTwitchResponse
+exports.canUserAfford = async (balance, cost, validItemName) => {
+    console.log(`balance`, balance.rows[0].current_points)
+    console.log(`cost`, cost)
+    if (balance.rows[0].current_points < cost){
+        return message.channel.send(`You cannot afford ${validItemName.rows[0].reward_name} right now. Keep saving up points!`);
+    }
 }
