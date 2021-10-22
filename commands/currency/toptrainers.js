@@ -4,7 +4,7 @@ const errors = require("../../controllers/error");
 const client = new Discord.Client();
 
 module.exports = {
-	name: 'leaderboard',
+	name: 'toptrainers',
 	description: 'Gets the top 10 users and their currency amounts.',
 	async execute(message) {
 
