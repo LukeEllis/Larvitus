@@ -23,7 +23,7 @@ module.exports = {
             }
 
             let shopEmbed = new Discord.MessageEmbed()
-            .setColor('#0099ff')
+            .setColor('RANDOM')
             .setTitle(`Shop`)
             .setDescription(`Redeem your points for prizes!`)
             .addFields(  
