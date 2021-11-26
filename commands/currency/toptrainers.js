@@ -23,9 +23,13 @@ module.exports = {
             //     return username
             // }
 
+            console.log('leaderboard', leaderboard)
+
+            console.log('leaderboard.rows.length', leaderboard.rows.length)
+
             for (i = leaderboard.rows.length; i > 0; i--){
 
-                leaderboardList += `\n**${leaderboard.rows.length - (i-1)}** <@${leaderboard.rows[i-1].discord_user_id}> Total Points: ${leaderboard.rows[i-1].total_points}\n`
+                leaderboardList += `\n**${leaderboard.rows.length - (i-1)}** <@${leaderboard.rows[leaderboard.rows.length - i].discord_user_id}> Total Points: ${leaderboard.rows[leaderboard.rows.length - i].total_points}\n`
 
             }
 

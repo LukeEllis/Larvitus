@@ -2,7 +2,7 @@ const db = require("../services/postgres.service");
 
 exports.getLeaderboard = async (target) => {
     let getLeaderboardResponse = await db.query(
-        'SELECT * FROM stc.currency ORDER BY total_points ASC LIMIT 10'
+        'SELECT * FROM stc.currency ORDER BY total_points DESC LIMIT 10'
     )
     return getLeaderboardResponse
 }
