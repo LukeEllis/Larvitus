@@ -30,6 +30,11 @@ module.exports = {
                 return message.channel.send(`${validItemName.rows[0].reward_name} has already been redeemed! Once Blue has finished shiny hunting Mareep for TheInfestation9, this redeem will be available again.`);
             }
 
+            // If the reward is a discord role, and the user already has the role, don't buy it
+            if (itemCategory.rows[0].reward_type === 'discord_role' && amountOwned.rows.length == 1){
+                return message.channel.send(`You already own the ${validItemName.rows[0].reward_name} Discord Role!`);
+            }
+
             // If the user doesn't have an item entry for that reward, send them a message if they cannot afford it or insert a row if they can 
             if (amountOwned.rows.length < 1){
 
