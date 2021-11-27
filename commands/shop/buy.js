@@ -25,6 +25,11 @@ module.exports = {
             let amountOwned = await inventory.itemCheck(target, itemName);
             let itemCategory = await inventory.getItemCategories(itemName);
 
+            // If the reward is a stream interaction, and the redeem has already been done for the month, uncomment this code to block future redeems
+            if (itemCategory.rows[0].reward_type === 'stream_interaction'){
+                return message.channel.send(`${validItemName.rows[0].reward_name} has already been redeemed! Once Blue has finished shiny hunting Mareep for TheInfestation9, this redeem will be available again.`);
+            }
+
             // If the user doesn't have an item entry for that reward, send them a message if they cannot afford it or insert a row if they can 
             if (amountOwned.rows.length < 1){
 
