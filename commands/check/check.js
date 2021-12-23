@@ -197,6 +197,7 @@ module.exports = {
                 "honedge", "doublade", "aegislash",
                 "sylveon",
                 "goomy", "sliggoo", "goodra",
+                "rowlet", "dartrix", "decidueye",
                 "oranguru",
                 "wimpod", "golisopod",
                 "sandygast", "palossand",
