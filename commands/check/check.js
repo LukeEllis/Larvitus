@@ -20,7 +20,7 @@ module.exports = {
                 "weedle", "kakuna", "beedrill",
                 "pidgey","pidgeotto","pidgeot",
                 "pikachu", "raichu",
-                "nidoran", "m", "nidoranmale", "nidoran♂", "nidorino", "nidoking",
+                "nidoran", "nidoranm", "nidoranmale", "nidoran♂", "nidorino", "nidoking",
                 "vulpix", "ninetales",
                 "growlithe", "arcanine",
                 "poliwag","poliwhirl",
