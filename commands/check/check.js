@@ -186,6 +186,7 @@ module.exports = {
                 "petilil", "lilligant",
                 "sandile", "krokorok", "krookodile",
                 "darumaka", "darmanitan",
+                "yamask", "cofagrigus",
                 "tirtouga", "carracosta",
                 "archen", "archeops",
                 "zorua", "zoroark",
@@ -216,7 +217,10 @@ module.exports = {
                 "dhelmise",
                 "rookidee", "corvisquire", "corviknight",
                 "sizzlipede", "centiskorch",
+                "perrserker",
                 "sirfetch'd",
+                "mr.rime", "mrrime",
+                "runerigus",
                 "pincurchin",
                 "indeedee"
             ]
