@@ -23,6 +23,7 @@ module.exports = {
                 "nidoran", "nidoranm", "nidoranmale", "nidoran♂", "nidorino", "nidoking",
                 "clefairy", "clefable",
                 "vulpix", "ninetales",
+                "zubat", "golbat",
                 "growlithe", "arcanine",
                 "poliwag","poliwhirl",
                 "abra","kadabra","alakazam",
