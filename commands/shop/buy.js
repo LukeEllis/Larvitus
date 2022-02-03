@@ -27,7 +27,7 @@ module.exports = {
 
             // If the reward is a stream interaction, and the redeem has already been done for the month, uncomment this code to block future redeems
             if (itemCategory.rows[0].reward_type === 'stream_interaction'){
-                return message.channel.send(`${validItemName.rows[0].reward_name} has already been redeemed for the month of January! You'll be able to choose a hunt again in February :).`);
+                return message.channel.send(`${validItemName.rows[0].reward_name} has already been redeemed for the month of February! You'll be able to choose a hunt again in March :).`);
             }
 
             // If the reward is a discord role, and the user already has the role, don't buy it
