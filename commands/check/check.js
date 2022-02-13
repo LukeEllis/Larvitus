@@ -45,6 +45,7 @@ module.exports = {
                 "jynx",
                 "electabuzz",
                 "magmar",
+                "pinsir",
                 "magikarp", "gyarados",
                 "ditto",
                 "eevee", "vaporeon", "jolteon", "flareon",
