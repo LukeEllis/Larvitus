@@ -142,6 +142,7 @@ module.exports = {
                 "relicanth",
                 "bagon", "shelgon", "salamence",
                 "beldum", "metang", "metagross",
+                "regirock", "regice", "registeel",
                 "rayquaza",
                 "deoxys",
                 "turtwig", "grotle", "torterra",
@@ -191,6 +192,7 @@ module.exports = {
                 "froslass",
                 "rotom",
                 "palkia",
+                "regigigas",
                 "giratina",
                 "darkrai",
                 "shaymin",
@@ -308,6 +310,7 @@ module.exports = {
                 "eternatus",
                 "kubfu", "urshifu",
                 "zarude",
+                "regieleki", "regidrago",
                 "glastrier","spectrier",
                 "calyrex"
             ]
