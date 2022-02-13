@@ -232,6 +232,7 @@ module.exports = {
                 "fennekin", "braixen", "delphox",
                 "froakie", "frogadier", "greninja",
                 "bunnelby", "diggersby",
+                "vivillon",
                 "flabébé", "flabebe", "floette", "florges",
                 "skiddo", "gogoat",
                 "espurr", "meowstic",
