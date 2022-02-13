@@ -49,6 +49,7 @@ module.exports = {
                 "porygon",
                 "aerodactyl",
                 "snorlax",
+                "articuno","zapdos","moltres",
                 "dratini", "dragonair", "dragonite",
                 "chikorita", "bayleef", "meganium",
                 "cyndaquil", "quilava", "typhlosion",
@@ -92,7 +93,7 @@ module.exports = {
                 "smoochum",
                 "elekid",
                 "magby",
-                "raikou",
+                "raikou","entei","suicune",
                 "larvitar", "pupitar", "tyranitar",
                 "treecko", "grovyle", "sceptile",
                 "torchic", "combusken", "blaziken",
@@ -208,6 +209,7 @@ module.exports = {
                 "archen", "archeops",
                 "zorua", "zoroark",
                 "minccino", "cinccino",
+                "ducklett", "swanna",
                 "deerling", "sawsbuck",
                 "karrablast", "escavalier",
                 "axew", "fraxure", "haxorus",
@@ -235,6 +237,7 @@ module.exports = {
                 "yveltal",
                 "zygarde",
                 "rowlet", "dartrix", "decidueye",
+                "popplio", "brionne", "primarina",
                 "pikipek", "trumbeak", "toucannon",
                 "grubbin", "charjabug", "vikavolt",
                 "rockruff", "lycanroc",
@@ -272,6 +275,7 @@ module.exports = {
                 "pincurchin",
                 "indeedee",
                 "morpeko",
+                "cufant", "copperajah",
                 "dreepy", "drakloak", "dragapult"
             ]
 
