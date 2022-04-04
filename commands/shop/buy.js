@@ -26,9 +26,9 @@ module.exports = {
             let itemCategory = await inventory.getItemCategories(itemName);
 
             // If the reward is a stream interaction, and the redeem has already been done for the month, uncomment this code to block future redeems
-            if (itemCategory.rows[0].reward_type === 'stream_interaction'){
-                return message.channel.send(`${validItemName.rows[0].reward_name} has already been redeemed for the month of March! You'll be able to choose a hunt again in April :).`);
-            }
+            // if (itemCategory.rows[0].reward_type === 'stream_interaction'){
+            //     return message.channel.send(`${validItemName.rows[0].reward_name} has already been redeemed for the month of March! You'll be able to choose a hunt again in April :).`);
+            // }
 
             // If the reward is a discord role, and the user already has the role, don't buy it
             if (itemCategory.rows[0].reward_type === 'discord_role' && amountOwned.rows.length == 1){
@@ -65,7 +65,11 @@ module.exports = {
                     // Adds role to the user
                     member.roles.add(role).catch(console.error);
 
-                    return message.channel.send(`Congratulations ${target.username}, you are now a proud owner of the ${role} role!`);
+                    let roleRedeemEmbed = new Discord.MessageEmbed()
+                        .setColor('RANDOM')
+                        .setTitle(`Discord Role Redeem`)
+                        .setDescription(`Congratulations ${target.username}, you are now a proud owner of the ${role} role!`)
+                    return message.channel.send({ embed: roleRedeemEmbed });
 
                 // If the reward is a stream interaction, post that redeem in #shiny-trainer-credit
                 }else if (itemCategory.rows[0].reward_type === 'stream_interaction'){
