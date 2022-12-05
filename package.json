@@ -4,7 +4,7 @@
   "description": "Bot to handle events for Bluechromed",
   "main": "app.js",
   "dependencies": {
-    "discord.js": "^13.2.0",
+    "discord.js": "^14.7.1",
     "pg": "^8.6.0",
     "sequelize": "^6.5.1"
   },
